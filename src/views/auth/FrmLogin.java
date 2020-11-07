@@ -178,7 +178,7 @@ public class FrmLogin extends JFrame {
 					if (respuesta) {
 						setVisible(false);
 						// Abrir la ventana principal
-						FrmPrincipal frm = new FrmPrincipal();
+						FrmPrincipal frm = new FrmPrincipal(usuarioLogin);
 						frm.setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Iniciar sesón",

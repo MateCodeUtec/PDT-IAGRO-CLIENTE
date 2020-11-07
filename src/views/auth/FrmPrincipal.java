@@ -11,6 +11,7 @@ import java.awt.Toolkit;
 import javax.swing.border.LineBorder;
 
 import enums.AccionFormulario;
+import models.Usuario;
 import views.usuario.FrmListado;
 import views.usuario.FrmUsuarioAM;
 
@@ -33,7 +34,7 @@ public class FrmPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrmPrincipal() {
+	public FrmPrincipal(Usuario usuario) {
 		setUndecorated(true);
 		setTitle("IAGRO - Principal");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrmPrincipal.class.getResource("/views/assets/icons/icon-app-barra.png")));
@@ -75,7 +76,7 @@ public class FrmPrincipal extends JFrame {
 		btnUsuarioAlta.setToolTipText("Agregar usuario");
 		btnUsuarioAlta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrmUsuarioAM frm = new FrmUsuarioAM(AccionFormulario.Alta);
+				FrmUsuarioAM frm = new FrmUsuarioAM(AccionFormulario.Alta, null);
 				frm.setVisible(true);
 			}
 		});
@@ -92,7 +93,7 @@ public class FrmPrincipal extends JFrame {
 		btnUsuarioListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				FrmListado frm = new FrmListado();
+				FrmListado frm = new FrmListado(AccionFormulario.Listar);
 				frm.setVisible(true);
 				
 			}
@@ -109,8 +110,10 @@ public class FrmPrincipal extends JFrame {
 		JButton btnUsuarioEditar = new JButton("");
 		btnUsuarioEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrmUsuarioAM frm = new FrmUsuarioAM(AccionFormulario.Modificar);
+				
+				FrmListado frm = new FrmListado(AccionFormulario.Modificar);
 				frm.setVisible(true);
+				
 			}
 		});
 		btnUsuarioEditar.setToolTipText("Modificar usuario");
@@ -123,6 +126,14 @@ public class FrmPrincipal extends JFrame {
 		panel_usuarios.add(btnUsuarioEditar);
 		
 		JButton btnUsuarioEliminar = new JButton("");
+		btnUsuarioEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				FrmListado frm = new FrmListado(AccionFormulario.Eliminar);
+				frm.setVisible(true);
+				
+			}
+		});
 		btnUsuarioEliminar.setToolTipText("Eliminar usuario");
 		btnUsuarioEliminar.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/eliminar.png")));
 		btnUsuarioEliminar.setForeground(Color.WHITE);
@@ -241,5 +252,8 @@ public class FrmPrincipal extends JFrame {
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_4.setBounds(604, 498, 203, 14);
 		panel_2.add(lblNewLabel_4);
+		
+		lblNombreUsuario.setText(usuario.getNombre()+" "+usuario.getApellido());
+		
 	}
 }

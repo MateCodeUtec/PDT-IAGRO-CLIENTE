@@ -57,7 +57,7 @@ public class FrmUsuarioAM extends JFrame {
 	/**
 	 * Create the frame. 
 	 */
-	public FrmUsuarioAM(AccionFormulario accion) {
+	public FrmUsuarioAM(AccionFormulario accion, Usuario u) {
 		setUndecorated(true);
 		setTitle("IAGRO - Principal");
 		setIconImage(Toolkit.getDefaultToolkit()
@@ -265,15 +265,12 @@ public class FrmUsuarioAM extends JFrame {
 
 						usuarioBean.crear(u);
 						JOptionPane.showMessageDialog(null, "Usuario guardado con exito");
-
-						var campos = new ArrayList<JTextField>();
-						campos.add(txtNombre);
-						campos.add(txtUsuario);
-						campos.add(txtApellido);
-						campos.add(txtPass);
-						limpiarTextFields(campos);
-
+						
+						setVisible(false);
+						
 					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(null, "El usuario ya existe", "Ups!",
+								JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
 				}
@@ -289,6 +286,7 @@ public class FrmUsuarioAM extends JFrame {
 		panel_2.add(btnGuardar);
 		
 		JLabel lblId = new JLabel("New label");
+		lblId.setVisible(false);
 		lblId.setBounds(345, 296, 45, 13);
 		panel_2.add(lblId);
 
@@ -323,13 +321,8 @@ public class FrmUsuarioAM extends JFrame {
 						usuarioBean.actualizar(u);
 						JOptionPane.showMessageDialog(null, "Usuario actualizado con exito");
 
-						var campos = new ArrayList<JTextField>();
-						campos.add(txtNombre);
-						campos.add(txtUsuario);
-						campos.add(txtApellido);
-						campos.add(txtPass);
-						limpiarTextFields(campos);
-
+						setVisible(false);
+						
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
@@ -356,16 +349,7 @@ public class FrmUsuarioAM extends JFrame {
 		} else if (accion == AccionFormulario.Modificar) {
 			lblTitulo.setText("Modificar usuario");
 			btnModificar.setVisible(true);
-
-			Usuario u = null;
-			try {
-				u = usuarioBean.getUsuarioPorId(101L);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			
-
 			// Cargo datos
 			
 			lblId.setText(String.valueOf(u.getId()));
