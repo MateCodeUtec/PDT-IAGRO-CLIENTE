@@ -12,6 +12,7 @@ import javax.swing.border.LineBorder;
 
 import enums.AccionFormulario;
 import models.Usuario;
+import views.form.FrmFormAM;
 import views.usuario.FrmListado;
 import views.usuario.FrmUsuarioAM;
 
@@ -37,7 +38,8 @@ public class FrmPrincipal extends JFrame {
 	public FrmPrincipal(Usuario usuario) {
 		setUndecorated(true);
 		setTitle("IAGRO - Principal");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(FrmPrincipal.class.getResource("/views/assets/icons/icon-app-barra.png")));
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(FrmPrincipal.class.getResource("/views/assets/icons/icon-app-barra.png")));
 		setBounds(100, 100, 818, 523);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -45,25 +47,25 @@ public class FrmPrincipal extends JFrame {
 		contentPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(255, 255, 255));
 		panel_2.setBounds(0, 0, 817, 523);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
-		
+
 		JPanel panel_usuarios = new JPanel();
 		panel_usuarios.setBackground(new Color(234, 234, 234));
 		panel_usuarios.setBounds(42, 77, 217, 218);
 		panel_2.add(panel_usuarios);
 		panel_usuarios.setLayout(null);
-		
+
 		JLabel lblNewLabel = new JLabel("Usuarios");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel.setBounds(10, 11, 197, 24);
 		panel_usuarios.add(lblNewLabel);
-		
+
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setBackground(new Color(255, 255, 255));
 		lblNewLabel_3.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/principal_user.png")));
@@ -71,7 +73,7 @@ public class FrmPrincipal extends JFrame {
 		lblNewLabel_3.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_3.setBounds(10, 46, 197, 120);
 		panel_usuarios.add(lblNewLabel_3);
-		
+
 		JButton btnUsuarioAlta = new JButton("");
 		btnUsuarioAlta.setToolTipText("Agregar usuario");
 		btnUsuarioAlta.addActionListener(new ActionListener() {
@@ -88,14 +90,14 @@ public class FrmPrincipal extends JFrame {
 		btnUsuarioAlta.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnUsuarioAlta.setBorder(null);
 		btnUsuarioAlta.setBackground(new Color(255, 255, 255));
-		
+
 		JButton btnUsuarioListar = new JButton("");
 		btnUsuarioListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				FrmListado frm = new FrmListado(AccionFormulario.Listar);
 				frm.setVisible(true);
-				
+
 			}
 		});
 		btnUsuarioListar.setToolTipText("Listar usuarios");
@@ -106,14 +108,14 @@ public class FrmPrincipal extends JFrame {
 		btnUsuarioListar.setBackground(Color.WHITE);
 		btnUsuarioListar.setBounds(67, 177, 37, 30);
 		panel_usuarios.add(btnUsuarioListar);
-		
+
 		JButton btnUsuarioEditar = new JButton("");
 		btnUsuarioEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				FrmListado frm = new FrmListado(AccionFormulario.Modificar);
 				frm.setVisible(true);
-				
+
 			}
 		});
 		btnUsuarioEditar.setToolTipText("Modificar usuario");
@@ -124,14 +126,14 @@ public class FrmPrincipal extends JFrame {
 		btnUsuarioEditar.setBackground(Color.WHITE);
 		btnUsuarioEditar.setBounds(114, 177, 37, 30);
 		panel_usuarios.add(btnUsuarioEditar);
-		
+
 		JButton btnUsuarioEliminar = new JButton("");
 		btnUsuarioEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				FrmListado frm = new FrmListado(AccionFormulario.Eliminar);
 				frm.setVisible(true);
-				
+
 			}
 		});
 		btnUsuarioEliminar.setToolTipText("Eliminar usuario");
@@ -142,29 +144,30 @@ public class FrmPrincipal extends JFrame {
 		btnUsuarioEliminar.setBackground(Color.WHITE);
 		btnUsuarioEliminar.setBounds(161, 177, 37, 30);
 		panel_usuarios.add(btnUsuarioEliminar);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 912, 39);
 		panel_2.add(panel);
 		panel.setBackground(new Color(119, 184, 105));
 		panel.setLayout(null);
-		
+
 		JLabel lblNewLabel_1 = new JLabel("Principal");
 		lblNewLabel_1.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		lblNewLabel_1.setBounds(39, 11, 347, 14);
 		panel.add(lblNewLabel_1);
-		
+
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/icon-app-ventana.png")));
+		lblNewLabel_2
+				.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/icon-app-ventana.png")));
 		lblNewLabel_2.setBounds(10, 11, 19, 16);
 		panel.add(lblNewLabel_2);
-		
+
 		JLabel lblNombreUsuario = new JLabel("Nombre de usuario");
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNombreUsuario.setBounds(457, 11, 239, 14);
 		panel.add(lblNombreUsuario);
 		lblNombreUsuario.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		
+
 		JLabel lblCerrarSesion = new JLabel("Cerrar sesi\u00F3n");
 		lblCerrarSesion.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCerrarSesion.addMouseListener(new MouseAdapter() {
@@ -178,28 +181,38 @@ public class FrmPrincipal extends JFrame {
 		lblCerrarSesion.setBounds(706, 11, 96, 14);
 		panel.add(lblCerrarSesion);
 		lblCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		
+
 		JPanel panel_formularios = new JPanel();
 		panel_formularios.setLayout(null);
 		panel_formularios.setBackground(new Color(234, 234, 234));
 		panel_formularios.setBounds(300, 77, 217, 218);
 		panel_2.add(panel_formularios);
-		
+
 		JLabel lblFormularios = new JLabel("Formularios");
 		lblFormularios.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFormularios.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblFormularios.setBounds(10, 11, 197, 24);
 		panel_formularios.add(lblFormularios);
-		
+
 		JLabel lblNewLabel_3_1 = new JLabel("");
-		lblNewLabel_3_1.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/principal_form.png")));
+		lblNewLabel_3_1
+				.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/principal_form.png")));
 		lblNewLabel_3_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_3_1.setBackground(Color.WHITE);
 		lblNewLabel_3_1.setBounds(10, 46, 197, 120);
 		panel_formularios.add(lblNewLabel_3_1);
-		
+
 		JButton btnFormularioAlta = new JButton("");
+		btnFormularioAlta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				FrmFormAM frm = new FrmFormAM(AccionFormulario.Alta, usuario);
+				frm.setVisible(true);
+
+			}
+		});
+
 		btnFormularioAlta.setToolTipText("Alta de formulario");
 		btnFormularioAlta.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/anadir.png")));
 		btnFormularioAlta.setForeground(Color.WHITE);
@@ -209,7 +222,7 @@ public class FrmPrincipal extends JFrame {
 		btnFormularioAlta.setBackground(Color.WHITE);
 		btnFormularioAlta.setBounds(20, 177, 37, 30);
 		panel_formularios.add(btnFormularioAlta);
-		
+
 		JButton btnFormularioListar = new JButton("");
 		btnFormularioListar.setToolTipText("Listar formularios");
 		btnFormularioListar.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/listar.png")));
@@ -219,7 +232,7 @@ public class FrmPrincipal extends JFrame {
 		btnFormularioListar.setBackground(Color.WHITE);
 		btnFormularioListar.setBounds(67, 177, 37, 30);
 		panel_formularios.add(btnFormularioListar);
-		
+
 		JButton btnFormularioEditar = new JButton("");
 		btnFormularioEditar.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/edit.png")));
 		btnFormularioEditar.setToolTipText("Editar formulario");
@@ -229,9 +242,10 @@ public class FrmPrincipal extends JFrame {
 		btnFormularioEditar.setBackground(Color.WHITE);
 		btnFormularioEditar.setBounds(114, 177, 37, 30);
 		panel_formularios.add(btnFormularioEditar);
-		
+
 		JButton btnFormularioEliminar = new JButton("");
-		btnFormularioEliminar.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/eliminar.png")));
+		btnFormularioEliminar
+				.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/eliminar.png")));
 		btnFormularioEliminar.setToolTipText("Eliminar usuario");
 		btnFormularioEliminar.setForeground(Color.WHITE);
 		btnFormularioEliminar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -239,12 +253,14 @@ public class FrmPrincipal extends JFrame {
 		btnFormularioEliminar.setBackground(Color.WHITE);
 		btnFormularioEliminar.setBounds(161, 177, 37, 30);
 		panel_formularios.add(btnFormularioEliminar);
-		
+
 		JLabel lblNewLabel_4 = new JLabel("Desarrollado por");
 		lblNewLabel_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null, "Ignacio Martins\nLucas Piegas\nGian Rios\nAlina Sainz\nAndres Calixto", "Equipo", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null,
+						"Ignacio Martins\nLucas Piegas\nGian Rios\nAlina Sainz\nAndres Calixto", "Equipo",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		lblNewLabel_4.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -252,8 +268,8 @@ public class FrmPrincipal extends JFrame {
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_4.setBounds(604, 498, 203, 14);
 		panel_2.add(lblNewLabel_4);
-		
-		lblNombreUsuario.setText(usuario.getNombre()+" "+usuario.getApellido());
-		
+
+		lblNombreUsuario.setText(usuario.getNombre() + " " + usuario.getApellido());
+
 	}
 }
