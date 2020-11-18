@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 import enums.AccionFormulario;
 import enums.TipoDato;
@@ -34,6 +35,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.TextField;
 
 import javax.naming.InitialContext;
@@ -44,11 +46,13 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
@@ -56,6 +60,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JCheckBox;
 
 public  class FrmFormAM extends JFrame {
 
@@ -65,7 +71,10 @@ public  class FrmFormAM extends JFrame {
 	private TipoParametroBeanRemote tipoParametroBean = null;
 	private ParametroBeanRemote parametroBean = null;
 	public static List<Parametro> listaParametros;
-	private FrmParamAM frm;
+	private JScrollPane scrollPaneParam;
+	private JTable jtable_param;
+	private JTextField txtNombre;
+	private JComboBox cbRol;
 
 	/**
 	 * Create the frame. 
@@ -131,7 +140,6 @@ public  class FrmFormAM extends JFrame {
 			tipoParametroBean = (TipoParametroBeanRemote) InitialContext
 					.doLookup("ejb:/IAGROEJB/TipoParametroBean!services.TipoParametroBeanRemote");
 		} catch (NamingException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 		
@@ -144,13 +152,13 @@ public  class FrmFormAM extends JFrame {
 		txtTitulo.setColumns(10);
 		txtTitulo.setBorder(null);
 		txtTitulo.setBackground(new Color(255, 255, 255));
-		txtTitulo.setBounds(31, 74, 199, 33);
+		txtTitulo.setBounds(31, 68, 199, 33);
 		panel_2.add(txtTitulo);
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(Color.LIGHT_GRAY);
 		separator.setBackground(new Color(248, 248, 255));
-		separator.setBounds(31, 111, 199, 10);
+		separator.setBounds(31, 107, 199, 10);
 		panel_2.add(separator);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Titulo");
@@ -173,7 +181,7 @@ public  class FrmFormAM extends JFrame {
 
 		JLabel lblNewLabel_1_1_2 = new JLabel("Descripcion");
 		lblNewLabel_1_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1_1_2.setBounds(31, 131, 199, 14);
+		lblNewLabel_1_1_2.setBounds(31, 117, 199, 14);
 		panel_2.add(lblNewLabel_1_1_2);
 
 		JSeparator separator_2_1 = new JSeparator();
@@ -182,11 +190,52 @@ public  class FrmFormAM extends JFrame {
 		separator_2_1.setBounds(31, 340, 431, 10);
 		panel_2.add(separator_2_1);
 		
+		JCheckBox checkBoxObligatorio = new JCheckBox("Es obligatorio");
+		checkBoxObligatorio.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		checkBoxObligatorio.setBackground(Color.WHITE);
+		checkBoxObligatorio.setBounds(31, 303, 144, 21);
+		panel_2.add(checkBoxObligatorio);
 		
 		JTextArea taDescripcion = new JTextArea();
 		taDescripcion.setBorder(new LineBorder(new Color(102, 204, 51)));
-		taDescripcion.setBounds(31, 155, 199, 65);
+		taDescripcion.setBounds(31, 138, 199, 65);
 		panel_2.add(taDescripcion);
+		
+		JButton btnAgregarParam = new JButton("Agregar Parametro");
+		btnAgregarParam.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				boolean obligatorio = checkBoxObligatorio.isSelected();
+				TipoDato tDato = (TipoDato) cbRol.getSelectedItem();
+				
+				TipoParametro tp = new TipoParametro(txtNombre.getText(), tDato);
+				
+				try {
+					tp = tipoParametroBean.crear(tp);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+				Parametro p = new Parametro(obligatorio,tp);
+				
+				try {
+					p = parametroBean.crear(p);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+				FrmFormAM.listaParametros.add(p);
+				construirTabla();
+					
+			}
+		});
+		btnAgregarParam.setForeground(Color.WHITE);
+		btnAgregarParam.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		btnAgregarParam.setBorder(new LineBorder(new Color(240, 248, 255)));
+		btnAgregarParam.setBackground(new Color(102, 204, 0));
+		btnAgregarParam.setBounds(251, 303, 144, 33);
+		panel_2.add(btnAgregarParam);
+		
 
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
@@ -202,33 +251,7 @@ public  class FrmFormAM extends JFrame {
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 				*/
-				/*
-					//Armo el objeto formulario
-					var listaParametros = new ArrayList<Parametro>();
 					
-					TipoParametro tp = new TipoParametro("Cantidad de agua", TipoDato.STRING);
-					try {
-						tp = tipoParametroBean.crear(tp);
-						JOptionPane.showMessageDialog(null, tp.toString());
-						
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, e1.getMessage(), "Ups!",
-								JOptionPane.ERROR_MESSAGE);
-						e1.printStackTrace();
-					}
-					
-					Parametro p = new Parametro(true, tp);
-					try {
-						p = parametroBean.crear(p);
-						JOptionPane.showMessageDialog(null, tp.toString());
-						
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, e1.getMessage(), "Ups!",
-								JOptionPane.ERROR_MESSAGE);
-						e1.printStackTrace();
-					}
-					listaParametros.add(p);
-					*/
 					Formulario f = new Formulario();
 					f.setTitulo(titulo);
 					f.setDescripcion(descripcion);
@@ -261,7 +284,7 @@ public  class FrmFormAM extends JFrame {
 		
 		JLabel lblId = new JLabel("New label");
 		lblId.setVisible(false);
-		lblId.setBounds(388, 317, 45, 13);
+		lblId.setBounds(255, 364, 45, 13);
 		panel_2.add(lblId);
 
 		JButton btnModificar = new JButton("Modificar");
@@ -276,25 +299,54 @@ public  class FrmFormAM extends JFrame {
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(Color.LIGHT_GRAY);
 		separator_1.setBackground(new Color(248, 248, 255));
-		separator_1.setBounds(31, 230, 431, 10);
+		separator_1.setBounds(31, 213, 450, 10);
 		panel_2.add(separator_1);
 		
-		JButton btnAgregarParam = new JButton("Nueva casilla");
-		btnAgregarParam.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				FrmParamAM frm = new FrmParamAM();
-				frm.setVisible(true);
-				
-			}
-		});
-		btnAgregarParam.setForeground(Color.WHITE);
-		btnAgregarParam.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnAgregarParam.setBorder(new LineBorder(new Color(240, 248, 255)));
-		btnAgregarParam.setBackground(new Color(102, 204, 0));
-		btnAgregarParam.setBounds(31, 296, 144, 33);
-		panel_2.add(btnAgregarParam);
+		scrollPaneParam = new JScrollPane();
+		scrollPaneParam.setBounds(251, 49, 230, 154);
+		panel_2.add(scrollPaneParam);
 		
+		jtable_param = new JTable();
+		jtable_param.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Nombre del parametro", "Tipo de Dato", "Obligatorio"
+			}
+		));
+		scrollPaneParam.setViewportView(jtable_param);
+		
+		txtNombre = new JTextField();
+		txtNombre.setVerifyInputWhenFocusTarget(false);
+		txtNombre.setForeground(Color.BLACK);
+		txtNombre.setFont(new Font("Arial", Font.PLAIN, 12));
+		txtNombre.setColumns(10);
+		txtNombre.setBorder(null);
+		txtNombre.setBackground(Color.WHITE);
+		txtNombre.setBounds(31, 250, 199, 33);
+		panel_2.add(txtNombre);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setForeground(Color.LIGHT_GRAY);
+		separator_2.setBackground(new Color(248, 248, 255));
+		separator_2.setBounds(31, 284, 199, 10);
+		panel_2.add(separator_2);
+		construirTabla();
+		
+		cbRol = new JComboBox();
+		cbRol.setBorder(null);
+		cbRol.setBackground(new Color(102, 204, 51));
+		cbRol.setBounds(251, 250, 230, 33);
+		panel_2.add(cbRol);
+		
+		JLabel lblNewLabel_1_1_2_1 = new JLabel("Nombre del parametro");
+		lblNewLabel_1_1_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1_2_1.setBounds(31, 230, 199, 14);
+		panel_2.add(lblNewLabel_1_1_2_1);
+		
+		
+		comboTipoParam();
+
 
 		// Configurar ventana
 		btnGuardar.setVisible(false);
@@ -312,21 +364,68 @@ public  class FrmFormAM extends JFrame {
 		}
 
 	}
+	
+	/**
+	 * Contruimos la tabla en el ScrollPane
+	 */
+	public void construirTabla() {
+		
+		String titulos [] = { "Nombre", "Tipo de Parametro", "Obligatorio"};
+		
+		String informacion [][] = obtenerMatriz();
+		
+		jtable_param = new JTable(informacion, titulos);
+		jtable_param.setBackground(SystemColor.activeCaptionBorder);
+		scrollPaneParam.setViewportView(jtable_param);
+	}
+	
+	/**
+	 * Completamos la tabla con datos
+	 * @return matriz [][]
+	 */
+	private String[][] obtenerMatriz() {
+		ArrayList<Parametro> miLista = null;	
+		miLista = (ArrayList<Parametro>) FrmFormAM.listaParametros;
+		
+		String matrizInfo[][] = new String [miLista.size()][3];
+		
+		for( int i = 0 ; i< miLista.size() ; i++) {
+			
+			String sn = "No";
+			if (miLista.get(i).isObligatorio()) {
+				sn = "Si";
+			}
+			
+			matrizInfo[i][0] = miLista.get(i).getTipo().getNombre() + "";
+			matrizInfo[i][1] = miLista.get(i).getTipo().getTipo() + "";
+			matrizInfo[i][2] = sn + "";
+			
+		}
+		return matrizInfo;
+	}
+
 
 	public void limpiarTextFields(ArrayList<JTextField> campos) {
-
 		for (JTextField tf : campos) {
 			tf.setText("");
 		}
-
 	}
 	
-	public static void listarParametros() {
-		
+	public static void listarParametros() {	
 		for (Parametro p : listaParametros) {
 			System.out.println(p.getTipo().getNombre());
 		}
-		
 	}
 	
+	/**
+	 * Carga el combo de seleccionar TipoParametro
+	 */
+	public void comboTipoParam() {
+		
+		List<TipoDato> tiposDatos = Arrays.asList(TipoDato.values());
+
+		for (TipoDato tp : tiposDatos) {
+			cbRol.addItem(tp);
+		}
+	}
 }

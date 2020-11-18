@@ -40,6 +40,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Cursor;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class FrmLogin extends JFrame {
 
@@ -127,6 +129,15 @@ public class FrmLogin extends JFrame {
 		txtUsuario.setColumns(10);
 
 		txtPassword = new JPasswordField();
+		txtPassword.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					login();
+				}
+
+			}
+		});
 		txtPassword.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -168,29 +179,7 @@ public class FrmLogin extends JFrame {
 		JButton btnIngresar = new JButton("Ingresar");
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				var usuario = txtUsuario.getText();
-				var pass = txtPassword.getText();
-
-				try {
-					Usuario usuarioLogin = uBean.getUsuario(usuario);
-					var respuesta = uBean.validarLogin(usuarioLogin, usuario, pass);
-					if (respuesta) {
-						setVisible(false);
-						// Abrir la ventana principal
-						FrmPrincipal frm = new FrmPrincipal(usuarioLogin);
-						frm.setVisible(true);
-					} else {
-						JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Iniciar sesón",
-								JOptionPane.ERROR_MESSAGE);
-					}
-
-				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Iniciar sesón",
-							JOptionPane.ERROR_MESSAGE);
-					e1.printStackTrace();
-				}
-
+				login();
 			}
 		});
 		btnIngresar.setBorder(new LineBorder(new Color(240, 248, 255)));
@@ -231,15 +220,38 @@ public class FrmLogin extends JFrame {
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setBounds(45, 68, 282, 45);
 		pnlleft_1.add(lblNewLabel_3);
-		
+
 		try {
-			uBean = (UsuarioBeanRemote) InitialContext
-					.doLookup("ejb:/IAGROEJB/UsuarioBean!services.UsuarioBeanRemote");
-
+			uBean = (UsuarioBeanRemote) InitialContext.doLookup("ejb:/IAGROEJB/UsuarioBean!services.UsuarioBeanRemote");
 		} catch (NamingException e1) {
-
 			System.out.println("e00----->" + e1.getStackTrace());
 		}
 
 	}
+
+	void login() {
+
+		var usuario = txtUsuario.getText();
+		var pass = txtPassword.getText();
+
+		try {
+			Usuario usuarioLogin = uBean.getUsuario(usuario);
+			var respuesta = uBean.validarLogin(usuarioLogin, usuario, pass);
+			if (respuesta) {
+				setVisible(false);
+				// Abrir la ventana principal
+				FrmPrincipal frm = new FrmPrincipal(usuarioLogin);
+				frm.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Iniciar sesón",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Iniciar sesón", JOptionPane.ERROR_MESSAGE);
+			e1.printStackTrace();
+		}
+
+	}
+
 }

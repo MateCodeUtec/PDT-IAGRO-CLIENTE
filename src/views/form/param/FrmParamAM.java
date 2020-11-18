@@ -208,37 +208,6 @@ public class FrmParamAM extends JFrame {
 		lblId.setBounds(388, 317, 45, 13);
 		panel_2.add(lblId);
 		
-		JButton btnAgregarParam = new JButton("Agregar Parametro");
-		btnAgregarParam.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				TipoParametro tp = new TipoParametro(txtNombre.getText(), TipoDato.STRING);
-				
-				try {
-					tp = tipoParametroBean.crear(tp);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				
-				Parametro p = new Parametro(true,tp);
-				
-				try {
-					p = parametroBean.crear(p);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				
-				FrmFormAM.listaParametros.add(p);
-				construirTabla();
-					
-			}
-		});
-		btnAgregarParam.setForeground(Color.WHITE);
-		btnAgregarParam.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnAgregarParam.setBorder(new LineBorder(new Color(240, 248, 255)));
-		btnAgregarParam.setBackground(new Color(102, 204, 0));
-		btnAgregarParam.setBounds(31, 244, 144, 33);
-		panel_2.add(btnAgregarParam);
 		
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setForeground(Color.LIGHT_GRAY);
