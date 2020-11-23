@@ -30,7 +30,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import enums.AccionFormulario;
+import models.Formulario;
 import models.Usuario;
+import services.FormularioBeanRemote;
 import services.UsuarioBeanRemote;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -39,9 +41,9 @@ public class FrmListadoForm extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtBuscar;
-	private JTable jtable_usuarios;
-	private JScrollPane scrollPaneUsuarios;
-	private UsuarioBeanRemote uBean;
+	private JTable jtable_form;
+	private JScrollPane scrollPaneForm;
+	private FormularioBeanRemote formBean;
 	
 	/**
 	 * Create the frame.
@@ -49,13 +51,10 @@ public class FrmListadoForm extends JFrame {
 	public FrmListadoForm(AccionFormulario accion) {
 		
 		try {
-			uBean = (UsuarioBeanRemote) InitialContext.doLookup("ejb:/IAGROEJB/UsuarioBean!services.UsuarioBeanRemote");
-			
+			formBean = (FormularioBeanRemote) InitialContext.doLookup("ejb:/IAGROEJB/FormularioBean!services.FormularioBeanRemote");			
 		} catch (NamingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-		
 		
 		setUndecorated(true);
 		setTitle("IAGRO - Principal");
@@ -81,7 +80,7 @@ public class FrmListadoForm extends JFrame {
 		panel.setBackground(new Color(119, 184, 105));
 		panel.setLayout(null);
 		
-		JLabel lblTitulo = new JLabel("Listado de usuario");
+		JLabel lblTitulo = new JLabel("Listado de formularios");
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		lblTitulo.setBounds(39, 11, 257, 14);
 		panel.add(lblTitulo);
@@ -126,14 +125,15 @@ public class FrmListadoForm extends JFrame {
 		panel_2.add(lblNewLabel_1_1);
 		
 		JButton btnEliminar = new JButton("");
+		/*
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				int row = jtable_usuarios.getSelectedRow(); 
+				int row = jtable_form.getSelectedRow(); 
 
 				if(row >= 0) {
 				    // Obtiene el valor de la celda 0 de la fila seleccionada
-				    String usuarioNombre = jtable_usuarios.getModel().getValueAt(row, 2).toString(); 
+				    String usuarioNombre = jtable_form.getModel().getValueAt(row, 0).toString(); 
 
 				    // Preguntamos si quiere eliminar el rol
 				    int pregunta = JOptionPane.showConfirmDialog(null,"¿Seguro que quieres eliminar este usuario?", "Eliminar usuario", JOptionPane.YES_NO_OPTION);
@@ -167,6 +167,7 @@ public class FrmListadoForm extends JFrame {
 				
 			}
 		});
+		*/
 		btnEliminar.setIcon(new ImageIcon(FrmListadoForm.class.getResource("/views/assets/icons/eliminar.png")));
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -176,21 +177,21 @@ public class FrmListadoForm extends JFrame {
 		panel_2.add(btnEliminar);
 		
 		JButton btnEditar = new JButton("");
+		/*
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int row = jtable_usuarios.getSelectedRow(); 
+				int row = jtable_form.getSelectedRow(); 
 
 				if(row >= 0) {
 				    // Obtiene el valor de la celda 0 de la fila seleccionada
-				    String usuario = jtable_usuarios.getModel().getValueAt(row, 2).toString();
-				    Usuario u = null;
+				    Long id = Long.parseLong(jtable_form.getModel().getValueAt(row, 0).toString());
+				    Formulario f = null;
 				    try {
-						u = uBean.getUsuario(usuario);
+						f = formBean.getFormularioById(id);
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					} 
-				    FrmFormAM frm = new FrmFormAM(AccionFormulario.Modificar, u );
+				    FrmFormAM frm = new FrmFormAM(AccionFormulario.Modificar, f );
 				    frm.setVisible(true);
 				    setVisible(false);
 
@@ -199,6 +200,7 @@ public class FrmListadoForm extends JFrame {
 				}
 			}
 		});
+		*/
 		btnEditar.setIcon(new ImageIcon(FrmListadoForm.class.getResource("/views/assets/icons/edit.png")));
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -207,19 +209,19 @@ public class FrmListadoForm extends JFrame {
 		btnEditar.setBounds(31, 111, 45, 33);
 		panel_2.add(btnEditar);
 		
-		scrollPaneUsuarios = new JScrollPane();
-		scrollPaneUsuarios.setBounds(31, 155, 682, 227);
-		panel_2.add(scrollPaneUsuarios);
+		scrollPaneForm = new JScrollPane();
+		scrollPaneForm.setBounds(31, 155, 682, 227);
+		panel_2.add(scrollPaneForm);
 		
-		jtable_usuarios = new JTable();
-		jtable_usuarios.setModel(new DefaultTableModel(
+		jtable_form = new JTable();
+		jtable_form.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"Usuario", "Nombre", "Apellido", "Rol"
+				"Identificador", "Titulo", "Descripcion"
 			}
 		));
-		scrollPaneUsuarios.setViewportView(jtable_usuarios);
+		scrollPaneForm.setViewportView(jtable_form);
 		construirTabla();
 		
 		
@@ -241,13 +243,13 @@ public class FrmListadoForm extends JFrame {
 	 */
 	public void construirTabla() {
 		
-		String titulos [] = { "Nombre", "Apellido", "Usuario", "Rol"};
+		String titulos [] = { "Identificador", "Titulo", "Descripcion" };
 		
 		String informacion [][] = obtenerMatriz();
 		
-		jtable_usuarios = new JTable(informacion, titulos);
-		jtable_usuarios.setBackground(SystemColor.activeCaptionBorder);
-		scrollPaneUsuarios.setViewportView(jtable_usuarios);
+		jtable_form = new JTable(informacion, titulos);
+		jtable_form.setBackground(SystemColor.activeCaptionBorder);
+		scrollPaneForm.setViewportView(jtable_form);
 	}
 	
 	/**
@@ -255,18 +257,17 @@ public class FrmListadoForm extends JFrame {
 	 * @return matriz [][]
 	 */
 	private String[][] obtenerMatriz() {
-		ArrayList<Usuario> miLista = null;	
-		miLista = (ArrayList<Usuario>) uBean.obtenerTodos();
+		ArrayList<Formulario> miLista = null;	
+		miLista = (ArrayList<Formulario>) formBean.obtenerTodos();
 		
-		String matrizInfo[][] = new String [miLista.size()][4];
+		String matrizInfo[][] = new String [miLista.size()][3];
 		
 		for( int i = 0 ; i< miLista.size() ; i++) {
 			
-			matrizInfo[i][0] = miLista.get(i).getNombre() + "";
-			matrizInfo[i][1] = miLista.get(i).getApellido() + "";
-			matrizInfo[i][2] = miLista.get(i).getUsuario() + "";
-			matrizInfo[i][3] = miLista.get(i).getRol().getNombre() + "";
-			
+			matrizInfo[i][0] = miLista.get(i).getId() + "";
+			matrizInfo[i][1] = miLista.get(i).getTitulo() + "";
+			matrizInfo[i][2] = miLista.get(i).getDescripcion() + "";
+	
 		}
 		return matrizInfo;
 	}

@@ -13,6 +13,7 @@ import javax.swing.border.LineBorder;
 import enums.AccionFormulario;
 import models.Usuario;
 import views.form.FrmFormAM;
+import views.form.FrmListadoForm;
 import views.usuario.FrmListado;
 import views.usuario.FrmUsuarioAM;
 
@@ -224,6 +225,14 @@ public class FrmPrincipal extends JFrame {
 		panel_formularios.add(btnFormularioAlta);
 
 		JButton btnFormularioListar = new JButton("");
+		btnFormularioListar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				FrmListadoForm frmListado = new FrmListadoForm(AccionFormulario.Listar);
+				frmListado.setVisible(true);
+				
+			}
+		});
 		btnFormularioListar.setToolTipText("Listar formularios");
 		btnFormularioListar.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/listar.png")));
 		btnFormularioListar.setForeground(Color.WHITE);
