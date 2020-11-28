@@ -135,7 +135,6 @@ public class FrmLogin extends JFrame {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					login();
 				}
-
 			}
 		});
 		txtPassword.addFocusListener(new FocusAdapter() {

@@ -53,6 +53,7 @@ public class FrmUsuarioAM extends JFrame {
 	private JPasswordField txtPass;
 	private JComboBox cbRol;
 	private UsuarioBeanRemote usuarioBean = null;
+	private JTextField txtMail;
 
 	/**
 	 * Create the frame. 
@@ -206,7 +207,7 @@ public class FrmUsuarioAM extends JFrame {
 
 		JLabel lblNewLabel_1_1_2_1 = new JLabel("Rol");
 		lblNewLabel_1_1_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1_1_2_1.setBounds(31, 251, 199, 14);
+		lblNewLabel_1_1_2_1.setBounds(263, 249, 199, 14);
 		panel_2.add(lblNewLabel_1_1_2_1);
 
 		JSeparator separator_2_1 = new JSeparator();
@@ -226,7 +227,7 @@ public class FrmUsuarioAM extends JFrame {
 		cbRol = new JComboBox();
 		cbRol.setBorder(null);
 		cbRol.setBackground(Color.WHITE);
-		cbRol.setBounds(31, 276, 199, 33);
+		cbRol.setBounds(263, 274, 199, 33);
 		panel_2.add(cbRol);
 		comboRoles();
 
@@ -245,11 +246,12 @@ public class FrmUsuarioAM extends JFrame {
 				var nombre = txtNombre.getText();
 				var apellido = txtApellido.getText();
 				var usuario = txtUsuario.getText();
+				var mail = txtMail.getText();
 				var pass = txtPass.getText();
 				Rol r = (Rol) cbRol.getSelectedItem();
 
 				if (Validaciones.esVacio(nombre) || Validaciones.esVacio(apellido) || Validaciones.esVacio(usuario)
-						|| Validaciones.esVacio(pass) || Validaciones.esVacio(r.getNombre())) {
+						|| Validaciones.esVacio(pass) || Validaciones.esVacio(mail) || Validaciones.esVacio(r.getNombre()) ) {
 					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Ups!",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
@@ -259,6 +261,7 @@ public class FrmUsuarioAM extends JFrame {
 					u.setApellido(apellido);
 					u.setUsuario(usuario);
 					u.setContrasenia(pass);
+					u.setMail(mail);
 					u.setRol(r);
 
 					try {
@@ -287,7 +290,7 @@ public class FrmUsuarioAM extends JFrame {
 		
 		JLabel lblId = new JLabel("New label");
 		lblId.setVisible(false);
-		lblId.setBounds(345, 296, 45, 13);
+		lblId.setBounds(284, 317, 45, 13);
 		panel_2.add(lblId);
 
 		JButton btnModificar = new JButton("Modificar");
@@ -299,11 +302,12 @@ public class FrmUsuarioAM extends JFrame {
 				var apellido = txtApellido.getText();
 				var usuario = txtUsuario.getText();
 				var pass = txtPass.getText();
+				var mail = txtMail.getText();
 				Long id = Long.valueOf(lblId.getText());
 				Rol r = (Rol) cbRol.getSelectedItem();
 
 				if (Validaciones.esVacio(nombre) || Validaciones.esVacio(apellido) || Validaciones.esVacio(usuario)
-						|| Validaciones.esVacio(pass) || Validaciones.esVacio(r.getNombre())) {
+						|| Validaciones.esVacio(pass) || Validaciones.esVacio(mail) || Validaciones.esVacio(r.getNombre())) {
 					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Ups!",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
@@ -313,6 +317,7 @@ public class FrmUsuarioAM extends JFrame {
 					u.setApellido(apellido);
 					u.setUsuario(usuario);
 					u.setContrasenia(pass);
+					u.setMail(mail);
 					u.setRol(r);
 					u.setId(id);
 
@@ -338,6 +343,27 @@ public class FrmUsuarioAM extends JFrame {
 		btnModificar.setBounds(31, 352, 102, 33);
 		panel_2.add(btnModificar);
 		
+		txtMail = new JTextField();
+		txtMail.setVerifyInputWhenFocusTarget(false);
+		txtMail.setForeground(Color.BLACK);
+		txtMail.setFont(new Font("Arial", Font.PLAIN, 12));
+		txtMail.setColumns(10);
+		txtMail.setBorder(null);
+		txtMail.setBackground(Color.WHITE);
+		txtMail.setBounds(31, 274, 199, 33);
+		panel_2.add(txtMail);
+		
+		JLabel lblNewLabel_1_1_2_2 = new JLabel("Correo");
+		lblNewLabel_1_1_2_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1_2_2.setBounds(31, 249, 199, 14);
+		panel_2.add(lblNewLabel_1_1_2_2);
+		
+		JSeparator separator_2_2 = new JSeparator();
+		separator_2_2.setForeground(Color.LIGHT_GRAY);
+		separator_2_2.setBackground(new Color(248, 248, 255));
+		separator_2_2.setBounds(31, 311, 199, 10);
+		panel_2.add(separator_2_2);
+		
 
 		// Configurar ventana
 		btnGuardar.setVisible(false);
@@ -356,6 +382,7 @@ public class FrmUsuarioAM extends JFrame {
 			txtUsuario.setText(u.getUsuario());
 			txtNombre.setText(u.getNombre());
 			txtApellido.setText(u.getApellido());
+			txtMail.setText(u.getMail());
 			txtPass.setText(u.getContrasenia());
 			selectedInCombo(u.getRol().getNombre());
 		}

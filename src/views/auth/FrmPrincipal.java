@@ -12,6 +12,8 @@ import javax.swing.border.LineBorder;
 
 import enums.AccionFormulario;
 import models.Usuario;
+import views.actividad.FrmActividadCampoAM;
+import views.actividad.FrmListadoActividad;
 import views.form.FrmFormAM;
 import views.form.FrmListadoForm;
 import views.usuario.FrmListado;
@@ -243,6 +245,11 @@ public class FrmPrincipal extends JFrame {
 		panel_formularios.add(btnFormularioListar);
 
 		JButton btnFormularioEditar = new JButton("");
+		btnFormularioEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnFormularioEditar.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/edit.png")));
 		btnFormularioEditar.setToolTipText("Editar formulario");
 		btnFormularioEditar.setForeground(Color.WHITE);
@@ -279,6 +286,78 @@ public class FrmPrincipal extends JFrame {
 		panel_2.add(lblNewLabel_4);
 
 		lblNombreUsuario.setText(usuario.getNombre() + " " + usuario.getApellido());
+		
+		JPanel panel_formularios_1 = new JPanel();
+		panel_formularios_1.setLayout(null);
+		panel_formularios_1.setBackground(new Color(234, 234, 234));
+		panel_formularios_1.setBounds(559, 77, 217, 218);
+		panel_2.add(panel_formularios_1);
+		
+		JLabel lblActividad = new JLabel("Actividades de campo");
+		lblActividad.setHorizontalAlignment(SwingConstants.CENTER);
+		lblActividad.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblActividad.setBounds(10, 11, 197, 24);
+		panel_formularios_1.add(lblActividad);
+		
+		JLabel lblNewLabel_3_1_1 = new JLabel("");
+		lblNewLabel_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		lblNewLabel_3_1_1.setBackground(Color.WHITE);
+		lblNewLabel_3_1_1.setBounds(10, 46, 197, 120);
+		panel_formularios_1.add(lblNewLabel_3_1_1);
+		
+		JButton btnFormularioAlta_1 = new JButton("");
+		btnFormularioAlta_1.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/anadir.png")));
+		btnFormularioAlta_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrmActividadCampoAM frmReporte = new FrmActividadCampoAM(AccionFormulario.Alta, usuario);
+				frmReporte.setVisible(true);
+			}
+		});
+		btnFormularioAlta_1.setToolTipText("Alta de formulario");
+		btnFormularioAlta_1.setForeground(Color.WHITE);
+		btnFormularioAlta_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		btnFormularioAlta_1.setBorderPainted(false);
+		btnFormularioAlta_1.setBorder(null);
+		btnFormularioAlta_1.setBackground(Color.WHITE);
+		btnFormularioAlta_1.setBounds(20, 177, 37, 30);
+		panel_formularios_1.add(btnFormularioAlta_1);
+		
+		JButton btnFormularioListar_1 = new JButton("");
+		btnFormularioListar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrmListadoActividad frmActivdad = new FrmListadoActividad(null);
+				frmActivdad.setVisible(true);
+			}
+		});
+		btnFormularioListar_1.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/listar.png")));
+		btnFormularioListar_1.setToolTipText("Listar formularios");
+		btnFormularioListar_1.setForeground(Color.WHITE);
+		btnFormularioListar_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		btnFormularioListar_1.setBorder(null);
+		btnFormularioListar_1.setBackground(Color.WHITE);
+		btnFormularioListar_1.setBounds(67, 177, 37, 30);
+		panel_formularios_1.add(btnFormularioListar_1);
+		
+		JButton btnFormularioEditar_1 = new JButton("");
+		btnFormularioEditar_1.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/edit.png")));
+		btnFormularioEditar_1.setToolTipText("Editar formulario");
+		btnFormularioEditar_1.setForeground(Color.WHITE);
+		btnFormularioEditar_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		btnFormularioEditar_1.setBorder(null);
+		btnFormularioEditar_1.setBackground(Color.WHITE);
+		btnFormularioEditar_1.setBounds(114, 177, 37, 30);
+		panel_formularios_1.add(btnFormularioEditar_1);
+		
+		JButton btnFormularioEliminar_1 = new JButton("");
+		btnFormularioEliminar_1.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/eliminar.png")));
+		btnFormularioEliminar_1.setToolTipText("Eliminar usuario");
+		btnFormularioEliminar_1.setForeground(Color.WHITE);
+		btnFormularioEliminar_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		btnFormularioEliminar_1.setBorder(null);
+		btnFormularioEliminar_1.setBackground(Color.WHITE);
+		btnFormularioEliminar_1.setBounds(161, 177, 37, 30);
+		panel_formularios_1.add(btnFormularioEliminar_1);
 
 	}
 }

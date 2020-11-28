@@ -21,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
@@ -34,6 +35,8 @@ import models.Usuario;
 import services.UsuarioBeanRemote;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class FrmListado extends JFrame {
 
@@ -42,6 +45,7 @@ public class FrmListado extends JFrame {
 	private JTable jtable_usuarios;
 	private JScrollPane scrollPaneUsuarios;
 	private UsuarioBeanRemote uBean;
+	private ArrayList<Usuario> miLista = null;
 	
 	/**
 	 * Create the frame.
@@ -50,7 +54,7 @@ public class FrmListado extends JFrame {
 		
 		try {
 			uBean = (UsuarioBeanRemote) InitialContext.doLookup("ejb:/IAGROEJB/UsuarioBean!services.UsuarioBeanRemote");
-			
+			miLista = (ArrayList<Usuario>) uBean.obtenerTodos();
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -104,6 +108,17 @@ public class FrmListado extends JFrame {
 		lblCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		
 		txtBuscar = new JTextField();
+		txtBuscar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				
+				var filtradoPersona = miLista.stream()
+						.filter(p -> p.getNombre().contains(txtBuscar.getText()) || p.getUsuario().contains(txtBuscar.getText()) || p.getApellido().contains(txtBuscar.getText()))
+						.collect(Collectors.toList());
+				miLista = (ArrayList<Usuario>) filtradoPersona;
+				construirTabla();
+			}
+		});
 		txtBuscar.setToolTipText("Buscar por Nombre, Apellido, Rol");
 		txtBuscar.setVerifyInputWhenFocusTarget(false);
 		txtBuscar.setForeground(new Color(0, 0, 0));
@@ -255,7 +270,7 @@ public class FrmListado extends JFrame {
 	 * @return matriz [][]
 	 */
 	private String[][] obtenerMatriz() {
-		ArrayList<Usuario> miLista = null;	
+	
 		miLista = (ArrayList<Usuario>) uBean.obtenerTodos();
 		
 		String matrizInfo[][] = new String [miLista.size()][4];

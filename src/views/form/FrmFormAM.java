@@ -47,6 +47,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
@@ -69,11 +70,24 @@ public  class FrmFormAM extends JFrame {
 	private FormularioBeanRemote formularioBean = null;
 	private TipoParametroBeanRemote tipoParametroBean = null;
 	private ParametroBeanRemote parametroBean = null;
-	public static List<Parametro> listaParametros;
+	public static Set setParametros;
+	public static ArrayList<Parametro> listaParametros;
+	public static ArrayList<JCheckBox> listaChecks;
+	public static JCheckBox checkFecha;
+	public static JCheckBox checkEstacion;
+	public static JCheckBox checkDepto;
+	public static JCheckBox checkRegion;
+	public static JCheckBox checkMetodo;
+	public static JCheckBox checkLocalidad;
+	public static JCheckBox checkEquip;
+	public static String tituloForm;
+	public static String descripcionForm;
+	
 	private JScrollPane scrollPaneParam;
 	private JTable jtable_param;
 	private JTextField txtNombre;
 	private JComboBox cbRol;
+	private JComboBox cbVisibilidad;
 	public static Formulario f;
 	
 	/**
@@ -87,7 +101,7 @@ public  class FrmFormAM extends JFrame {
 		setTitle("IAGRO - Principal");
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(FrmFormAM.class.getResource("/views/assets/icons/icon-app-barra.png")));
-		setBounds(100, 100, 762, 447);
+		setBounds(100, 100, 913, 484);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -98,12 +112,12 @@ public  class FrmFormAM extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_2.setBackground(new Color(255, 255, 255));
-		panel_2.setBounds(0, 0, 762, 447);
+		panel_2.setBounds(0, 0, 913, 484);
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 762, 39);
+		panel.setBounds(0, 0, 913, 39);
 		panel_2.add(panel);
 		panel.setBackground(new Color(119, 184, 105));
 		panel.setLayout(null);
@@ -127,7 +141,7 @@ public  class FrmFormAM extends JFrame {
 				setVisible(false);
 			}
 		});
-		lblCerrarSesion.setBounds(714, 11, 19, 14);
+		lblCerrarSesion.setBounds(869, 11, 19, 14);
 		panel.add(lblCerrarSesion);
 		lblCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		
@@ -152,18 +166,18 @@ public  class FrmFormAM extends JFrame {
 		txtTitulo.setColumns(10);
 		txtTitulo.setBorder(null);
 		txtTitulo.setBackground(new Color(255, 255, 255));
-		txtTitulo.setBounds(31, 87, 199, 33);
+		txtTitulo.setBounds(31, 131, 199, 33);
 		panel_2.add(txtTitulo);
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(Color.LIGHT_GRAY);
 		separator.setBackground(new Color(248, 248, 255));
-		separator.setBounds(31, 126, 199, 10);
+		separator.setBounds(31, 170, 199, 10);
 		panel_2.add(separator);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Titulo");
 		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1_1.setBounds(31, 68, 199, 14);
+		lblNewLabel_1_1.setBounds(31, 112, 199, 14);
 		panel_2.add(lblNewLabel_1_1);
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -174,37 +188,43 @@ public  class FrmFormAM extends JFrame {
 		});
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnCancelar.setBorder(new LineBorder(new Color(240, 248, 255)));
+		btnCancelar.setBorder(new LineBorder(new Color(119, 184, 105)));
 		btnCancelar.setBackground(new Color(102, 204, 0));
-		btnCancelar.setBounds(199, 404, 162, 33);
+		btnCancelar.setBounds(31, 441, 162, 33);
 		panel_2.add(btnCancelar);
 
 		JLabel lblNewLabel_1_1_2 = new JLabel("Descripcion");
 		lblNewLabel_1_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1_1_2.setBounds(31, 181, 199, 14);
+		lblNewLabel_1_1_2.setBounds(31, 203, 199, 14);
 		panel_2.add(lblNewLabel_1_1_2);
 
 		JSeparator separator_2_1 = new JSeparator();
 		separator_2_1.setForeground(Color.LIGHT_GRAY);
 		separator_2_1.setBackground(new Color(248, 248, 255));
-		separator_2_1.setBounds(10, 340, 742, 10);
+		separator_2_1.setBounds(10, 384, 893, 10);
 		panel_2.add(separator_2_1);
 		
 		JCheckBox checkBoxObligatorio = new JCheckBox("Es obligatorio");
 		checkBoxObligatorio.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		checkBoxObligatorio.setBackground(Color.WHITE);
-		checkBoxObligatorio.setBounds(300, 303, 144, 21);
+		checkBoxObligatorio.setBounds(461, 348, 144, 21);
 		panel_2.add(checkBoxObligatorio);
 		
 		JTextArea taDescripcion = new JTextArea();
-		taDescripcion.setBorder(new LineBorder(new Color(102, 204, 51)));
-		taDescripcion.setBounds(31, 202, 199, 85);
+		taDescripcion.setBorder(new LineBorder(new Color(119, 184, 105)));
+		taDescripcion.setBounds(31, 224, 199, 85);
 		panel_2.add(taDescripcion);
 		
 		JButton btnAgregarParam = new JButton("Agregar Parametro");
 		btnAgregarParam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				if(txtNombre.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Ingrese un nombre para el parametro", "Ups!",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+					
 				boolean obligatorio = checkBoxObligatorio.isSelected();
 				TipoDato tDato = DevuelveTipoDato.devuelveTipoDato(((String)(cbRol.getSelectedItem())));
 				
@@ -214,84 +234,44 @@ public  class FrmFormAM extends JFrame {
 				
 				FrmFormAM.listaParametros.add(p);
 				construirTabla();
+				txtNombre.setText("");
+				txtNombre.requestFocus();
 					
 			}
 		});
 		btnAgregarParam.setForeground(Color.WHITE);
 		btnAgregarParam.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnAgregarParam.setBorder(new LineBorder(new Color(240, 248, 255)));
+		btnAgregarParam.setBorder(new LineBorder(new Color(119, 184, 105)));
 		btnAgregarParam.setBackground(new Color(102, 204, 0));
-		btnAgregarParam.setBounds(608, 296, 144, 33);
+		btnAgregarParam.setBounds(759, 341, 144, 33);
 		panel_2.add(btnAgregarParam);
 		
-
-		JButton btnGuardar = new JButton("Guardar");
-		btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				var titulo = txtTitulo.getText();
-				var descripcion = taDescripcion.getText();
-				
-				/*
-				if (Validaciones.esVacio(nombre) || Validaciones.esVacio(apellido) || Validaciones.esVacio(usuario)
-						|| Validaciones.esVacio(pass) || Validaciones.esVacio(r.getNombre())) {
-					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Ups!",
-							JOptionPane.ERROR_MESSAGE);
-				} else {
-				*/
-					
-					f = new Formulario();
-					f.setTitulo(titulo);
-					f.setDescripcion(descripcion);
-					f.setVisibilidad(Visibilidad.PUBLICO);
-					f.setUsuario(u);
-					f.setParametros(listaParametros);
-					
-					try {
-						formularioBean.crear(f);
-						JOptionPane.showMessageDialog(null, "Formulario guardado con exito");
-												
-						setVisible(false);
-						
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, e1.getMessage(), "Ups!",
-								JOptionPane.ERROR_MESSAGE);
-						e1.printStackTrace();
-					}
-		//		}
-
-			}
-
-		});
-		btnGuardar.setForeground(Color.WHITE);
-		btnGuardar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnGuardar.setBorder(new LineBorder(new Color(240, 248, 255)));
-		btnGuardar.setBackground(new Color(119, 184, 105));
-		btnGuardar.setBounds(10, 404, 162, 33);
-		panel_2.add(btnGuardar);
-		
-		JLabel lblId = new JLabel("New label");
-		lblId.setVisible(false);
-		lblId.setBounds(465, 364, 45, 13);
-		panel_2.add(lblId);
+		JLabel lblIdForm = new JLabel("New label");
+		lblIdForm.setVisible(false);
+		lblIdForm.setBounds(468, 418, 45, 13);
+		panel_2.add(lblIdForm);
 
 		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnModificar.setForeground(Color.WHITE);
 		btnModificar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnModificar.setBorder(new LineBorder(new Color(240, 248, 255)));
+		btnModificar.setBorder(new LineBorder(new Color(119, 184, 105)));
 		btnModificar.setBackground(new Color(119, 184, 105));
-		btnModificar.setBounds(31, 404, 102, 33);
+		btnModificar.setBounds(203, 441, 162, 33);
 		panel_2.add(btnModificar);
 		
 		
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(Color.LIGHT_GRAY);
 		separator_1.setBackground(new Color(248, 248, 255));
-		separator_1.setBounds(31, 297, 199, 10);
+		separator_1.setBounds(31, 319, 199, 10);
 		panel_2.add(separator_1);
 		
 		scrollPaneParam = new JScrollPane();
-		scrollPaneParam.setBounds(300, 49, 452, 154);
+		scrollPaneParam.setBounds(461, 112, 442, 154);
 		panel_2.add(scrollPaneParam);
 		
 		jtable_param = new JTable();
@@ -311,78 +291,142 @@ public  class FrmFormAM extends JFrame {
 		txtNombre.setColumns(10);
 		txtNombre.setBorder(null);
 		txtNombre.setBackground(Color.WHITE);
-		txtNombre.setBounds(300, 233, 199, 33);
+		txtNombre.setBounds(461, 296, 199, 33);
 		panel_2.add(txtNombre);
 		
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setForeground(Color.LIGHT_GRAY);
 		separator_2.setBackground(new Color(248, 248, 255));
-		separator_2.setBounds(300, 267, 199, 10);
+		separator_2.setBounds(461, 332, 199, 10);
 		panel_2.add(separator_2);
 		construirTabla();
 		
 		cbRol = new JComboBox();
-		cbRol.setBorder(null);
+		cbRol.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		cbRol.setBorder(new LineBorder(new Color(119, 184, 105)));
 		cbRol.setBackground(new Color(102, 204, 51));
-		cbRol.setBounds(522, 213, 230, 33);
+		cbRol.setBounds(673, 276, 230, 33);
 		panel_2.add(cbRol);
 		
 		JLabel lblNewLabel_1_1_2_1 = new JLabel("Nombre del parametro");
 		lblNewLabel_1_1_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		lblNewLabel_1_1_2_1.setBounds(300, 213, 199, 14);
+		lblNewLabel_1_1_2_1.setBounds(461, 276, 199, 14);
 		panel_2.add(lblNewLabel_1_1_2_1);
 		
 		JButton btnPreview = new JButton("Preview");
 		btnPreview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				var titulo = txtTitulo.getText();
-				var descripcion = taDescripcion.getText();
+				tituloForm = txtTitulo.getText();
+				descripcionForm = taDescripcion.getText();
+				Visibilidad vis = (Visibilidad) cbVisibilidad.getSelectedItem();
 				
-				/*
-				if (Validaciones.esVacio(nombre) || Validaciones.esVacio(apellido) || Validaciones.esVacio(usuario)
-						|| Validaciones.esVacio(pass) || Validaciones.esVacio(r.getNombre())) {
+				
+				if (Validaciones.esVacio(tituloForm) || Validaciones.esVacio(descripcionForm)) {
 					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Ups!",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-				*/
+				
 					
 					f = new Formulario();
-					f.setTitulo(titulo);
-					f.setDescripcion(descripcion);
-					f.setVisibilidad(Visibilidad.PUBLICO);
+					f.setTitulo(tituloForm);
+					f.setDescripcion(descripcionForm);
+					f.setVisibilidad(vis);
 					f.setUsuario(u);
-					f.setParametros(listaParametros);
 				
 				FrmPreview frmPreview = new FrmPreview(null);
 				frmPreview.setVisible(true);
-				
+				}
 			}
 		});
 		btnPreview.setForeground(Color.WHITE);
 		btnPreview.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnPreview.setBorder(new LineBorder(new Color(240, 248, 255)));
+		btnPreview.setBorder(new LineBorder(new Color(119, 184, 105)));
 		btnPreview.setBackground(new Color(102, 204, 0));
-		btnPreview.setBounds(590, 404, 162, 33);
+		btnPreview.setBounds(741, 441, 162, 33);
 		panel_2.add(btnPreview);
 		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBorder(null);
+		panel_1.setBackground(new Color(255, 255, 255));
+		panel_1.setBounds(240, 112, 199, 262);
+		panel_2.add(panel_1);
 		
+		cbVisibilidad = new JComboBox();
+		cbVisibilidad.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		cbVisibilidad.setBorder(new LineBorder(new Color(119, 184, 105)));
+		cbVisibilidad.setBackground(new Color(102, 204, 51));
+		cbVisibilidad.setBounds(31, 341, 199, 33);
+		panel_2.add(cbVisibilidad);
+		panel_1.setLayout(null);
+
+		checkMetodo = new JCheckBox("Metodos de muestreo");
+		checkMetodo.setBackground(new Color(255, 255, 255));
+		checkMetodo.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkMetodo.setBounds(3, 49, 190, 21);
+		panel_1.add(checkMetodo);
+		
+		checkRegion = new JCheckBox("Regiones");
+		checkRegion.setBackground(new Color(255, 255, 255));
+		checkRegion.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkRegion.setBounds(3, 84, 190, 21);
+		panel_1.add(checkRegion);
+		
+		checkLocalidad = new JCheckBox("Localidades");
+		checkLocalidad.setBackground(new Color(255, 255, 255));
+		checkLocalidad.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkLocalidad.setBounds(3, 154, 190, 21);
+		panel_1.add(checkLocalidad);
+		
+		checkEstacion = new JCheckBox("Estaciones de muestreo");
+		checkEstacion.setBackground(new Color(255, 255, 255));
+		checkEstacion.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkEstacion.setBounds(3, 119, 190, 21);
+		panel_1.add(checkEstacion);
+		
+		checkFecha = new JCheckBox("Fecha");
+		checkFecha.setBackground(new Color(255, 255, 255));
+		checkFecha.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkFecha.setBounds(3, 189, 190, 21);
+		panel_1.add(checkFecha);
+		
+		checkDepto = new JCheckBox("Departamentos");
+		checkDepto.setBackground(new Color(255, 255, 255));
+		checkDepto.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkDepto.setBounds(3, 224, 190, 21);
+		panel_1.add(checkDepto);
+		
+		checkEquip = new JCheckBox("Equipamientos");
+		checkEquip.setBackground(new Color(255, 255, 255));
+		checkEquip.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkEquip.setBounds(3, 14, 190, 21);
+		panel_1.add(checkEquip);
+		
+		JLabel lblNewLabel = new JLabel("Selecciona los campos a visualizar");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel.setBounds(240, 89, 201, 13);
+		panel_2.add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("Agrega los campos necesarios");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(461, 89, 452, 13);
+		panel_2.add(lblNewLabel_1);
+		
+		JSeparator separator_2_2 = new JSeparator();
+		separator_2_2.setOrientation(SwingConstants.VERTICAL);
+		separator_2_2.setForeground(Color.LIGHT_GRAY);
+		separator_2_2.setBackground(new Color(248, 248, 255));
+		separator_2_2.setBounds(447, 89, 14, 285);
+		panel_2.add(separator_2_2);
+
 		comboTipoParam();
-
-
-		// Configurar ventana
-		btnGuardar.setVisible(false);
+		comboVisibilidad();
 		btnModificar.setVisible(false);
 
-		if (accion == AccionFormulario.Alta) {
-			lblTitulo.setText("Alta de usuario");
-			btnGuardar.setVisible(true);
-		} else if (accion == AccionFormulario.Modificar) {
+		if (accion == AccionFormulario.Modificar) {
 			lblTitulo.setText("Modificar usuario");
 			btnModificar.setVisible(true);
-			
-			// Cargo datos
-			
+	
 		}
 
 	}
@@ -426,7 +470,6 @@ public  class FrmFormAM extends JFrame {
 		return matrizInfo;
 	}
 
-
 	public void limpiarTextFields(ArrayList<JTextField> campos) {
 		for (JTextField tf : campos) {
 			tf.setText("");
@@ -450,5 +493,12 @@ public  class FrmFormAM extends JFrame {
 			cbRol.addItem(DevuelveTipoDato.devuelveString(tp.toString()));
 		}
 	}
-	
+	public void comboVisibilidad() {
+		
+		List<Visibilidad> visibilidad = Arrays.asList(Visibilidad.values());
+
+		for (Visibilidad v : visibilidad) {
+			cbVisibilidad.addItem((v));
+		}
+	}
 }
