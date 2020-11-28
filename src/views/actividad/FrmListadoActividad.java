@@ -53,7 +53,7 @@ public class FrmListadoActividad extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrmListadoActividad(AccionFormulario accion) {
+	public FrmListadoActividad(AccionFormulario accion, Usuario usuario) {
 		
 		try {
 			actividadBean = (ActividadCampoBeanRemote) InitialContext.doLookup("ejb:/IAGROEJB/ActividadCampoBean!services.ActividadCampoBeanRemote");
@@ -134,6 +134,20 @@ public class FrmListadoActividad extends JFrame {
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				int row = jtable_actividad.getSelectedRow(); 
+
+				if(row >= 0) {
+				    // Obtiene el valor de la celda 0 de la fila seleccionada
+				    Long idActividad = Long.parseLong(jtable_actividad.getModel().getValueAt(row, 0).toString());
+				    actividadBean.desactivar(idActividad);
+		            JOptionPane.showMessageDialog(null,"Formulario eliminado", "Eliminar formulario", JOptionPane.INFORMATION_MESSAGE);
+		   
+		            construirTabla();
+				     
+				}else {
+				    JOptionPane.showMessageDialog(null,"Usted debe seleccionar la actividad de campo que desea eliminar", "Modificar actividad", JOptionPane.ERROR_MESSAGE);
+				}
+				
 				
 			}
 		});
@@ -155,11 +169,11 @@ public class FrmListadoActividad extends JFrame {
 				    Long idActividad = Long.parseLong(jtable_actividad.getModel().getValueAt(row, 0).toString());
 				    ActividadCampo ac = actividadBean.getActividadById(idActividad);
 				    
-				    FrmActividadCampoView frmAC = new FrmActividadCampoView(AccionFormulario.Alta, ac.getId());
-				    frmAC.setVisible(true);
-
+				    FrmActividadCampoAM frmReporte = new FrmActividadCampoAM(AccionFormulario.Modificar, usuario, idActividad);
+					frmReporte.setVisible(true);
+				    
 				}else {
-				    JOptionPane.showMessageDialog(null,"Usted debe seleccionar el usuario que desea modificar", "Modificar usuario", JOptionPane.ERROR_MESSAGE);
+				    JOptionPane.showMessageDialog(null,"Usted debe seleccionar la actividad de campo que desea modificar", "Modificar actividad", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -186,7 +200,7 @@ public class FrmListadoActividad extends JFrame {
 		scrollPaneUsuarios.setViewportView(jtable_actividad);
 		construirTabla();
 		
-		/*
+		
 		//Mostrar boton
 		btnEditar.setVisible(false);
 		btnEliminar.setVisible(false);
@@ -196,7 +210,7 @@ public class FrmListadoActividad extends JFrame {
 		} else if (accion == AccionFormulario.Modificar) {
 			btnEditar.setVisible(true);
 		}
-		*/
+		
 		
 	}
 	

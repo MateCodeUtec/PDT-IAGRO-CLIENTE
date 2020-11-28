@@ -48,6 +48,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.awt.event.ActionListener;
@@ -64,6 +65,7 @@ import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
+import com.toedter.calendar.JDateChooser;
 
 public  class FrmActividadCampoAM extends JFrame {
 
@@ -78,6 +80,9 @@ public  class FrmActividadCampoAM extends JFrame {
 	public static ArrayList<JCheckBox> listaChecks;
 	public static String tituloForm;
 	public static String descripcionForm;
+	private JButton btnPreview;
+	private ActividadCampo ac;
+	 
 	
 	private JScrollPane scrollPaneParam;
 	private JTable jtable_param;
@@ -86,7 +91,7 @@ public  class FrmActividadCampoAM extends JFrame {
 	/**
 	 * Create the frame. 
 	 */
-	public FrmActividadCampoAM(AccionFormulario accion, Usuario u) {
+	public FrmActividadCampoAM(AccionFormulario accion, Usuario u, Long idAc) {
 		
 		listaFormularios = new ArrayList<Formulario>();
 		
@@ -161,18 +166,18 @@ public  class FrmActividadCampoAM extends JFrame {
 		txtTitulo.setColumns(10);
 		txtTitulo.setBorder(null);
 		txtTitulo.setBackground(new Color(255, 255, 255));
-		txtTitulo.setBounds(31, 131, 330, 33);
+		txtTitulo.setBounds(31, 103, 330, 33);
 		panel_2.add(txtTitulo);
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(Color.LIGHT_GRAY);
 		separator.setBackground(new Color(248, 248, 255));
-		separator.setBounds(31, 170, 330, 10);
+		separator.setBounds(31, 142, 330, 10);
 		panel_2.add(separator);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Titulo");
 		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblNewLabel_1_1.setBounds(31, 112, 199, 14);
+		lblNewLabel_1_1.setBounds(31, 73, 199, 28);
 		panel_2.add(lblNewLabel_1_1);
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -184,24 +189,24 @@ public  class FrmActividadCampoAM extends JFrame {
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnCancelar.setBorder(new LineBorder(new Color(240, 248, 255)));
-		btnCancelar.setBackground(new Color(102, 204, 0));
+		btnCancelar.setBackground(Color.LIGHT_GRAY);
 		btnCancelar.setBounds(31, 441, 162, 33);
 		panel_2.add(btnCancelar);
 
 		JLabel lblNewLabel_1_1_2 = new JLabel("Descripcion");
 		lblNewLabel_1_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		lblNewLabel_1_1_2.setBounds(31, 203, 199, 14);
+		lblNewLabel_1_1_2.setBounds(31, 162, 199, 14);
 		panel_2.add(lblNewLabel_1_1_2);
 
 		JSeparator separator_2_1 = new JSeparator();
 		separator_2_1.setForeground(Color.LIGHT_GRAY);
 		separator_2_1.setBackground(new Color(248, 248, 255));
-		separator_2_1.setBounds(31, 384, 848, 10);
+		separator_2_1.setBounds(32, 398, 848, 10);
 		panel_2.add(separator_2_1);
 		
 		JTextArea taDescripcion = new JTextArea();
 		taDescripcion.setBorder(new LineBorder(new Color(102, 204, 51)));
-		taDescripcion.setBounds(31, 224, 330, 130);
+		taDescripcion.setBounds(31, 183, 330, 91);
 		panel_2.add(taDescripcion);
 		
 		JLabel lblId = new JLabel("New label");
@@ -213,11 +218,11 @@ public  class FrmActividadCampoAM extends JFrame {
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(Color.LIGHT_GRAY);
 		separator_1.setBackground(new Color(248, 248, 255));
-		separator_1.setBounds(31, 364, 330, 10);
+		separator_1.setBounds(31, 284, 330, 10);
 		panel_2.add(separator_1);
 		
 		scrollPaneParam = new JScrollPane();
-		scrollPaneParam.setBounds(395, 108, 485, 267);
+		scrollPaneParam.setBounds(395, 108, 485, 280);
 		panel_2.add(scrollPaneParam);
 		
 		jtable_param = new JTable();
@@ -231,7 +236,17 @@ public  class FrmActividadCampoAM extends JFrame {
 		scrollPaneParam.setViewportView(jtable_param);
 		construirTabla();
 		
-		JButton btnPreview = new JButton("Crear");
+		
+		JDateChooser fechaInicio = new JDateChooser();
+		fechaInicio.setBounds(31, 346, 330, 39);
+		fechaInicio.setDate(new Date());
+		panel_2.add(fechaInicio);
+		
+		
+		JButton	btnPreview = new JButton("Crear");
+		if (AccionFormulario.Modificar.equals(accion))
+			btnPreview = new JButton("Modificar");
+		btnPreview.setVisible(true);
 		btnPreview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -244,26 +259,37 @@ public  class FrmActividadCampoAM extends JFrame {
 				    try {
 					Formulario f = formularioBean.getFormularioById(idForm);
 					
-					ActividadCampo ac = new ActividadCampo();
+					ac = new ActividadCampo();
 					ac.setNombre(txtTitulo.getText());
 					ac.setDescripcion(taDescripcion.getText());
+					ac.setFechaInicio(fechaInicio.getDate());
 					ac.setUsuario(u);
 					ac.setFormulario(f);
 					
-					actividadBean.crear(ac);
-					JOptionPane.showMessageDialog(null, "Actividad de campo guardada con exito");
-					
+					if (AccionFormulario.Modificar.equals(accion)) {
+						actividadBean.actualizar(ac);
+						JOptionPane.showMessageDialog(null, "Actividad de campo modificada con exito");
+					}
+					else {
+						actividadBean.crear(ac);
+						JOptionPane.showMessageDialog(null, "Actividad de campo guardada con exito");
+					}
+
 					} catch (Exception e2) {
 						e2.printStackTrace();
 					}
-				}	
+				} else {
+					JOptionPane.showMessageDialog(null,"Usted debe seleccionar del listador un formulario", "Modificar actividad de campo", JOptionPane.ERROR_MESSAGE);
+				}
+				
+				
 				
 			}
 		});
 		btnPreview.setForeground(Color.WHITE);
 		btnPreview.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnPreview.setBorder(new LineBorder(new Color(240, 248, 255)));
-		btnPreview.setBackground(new Color(102, 204, 0));
+		btnPreview.setBackground(Color.LIGHT_GRAY);
 		btnPreview.setBounds(717, 441, 162, 33);
 		panel_2.add(btnPreview);
 		
@@ -276,8 +302,22 @@ public  class FrmActividadCampoAM extends JFrame {
 		separator_2_2.setOrientation(SwingConstants.VERTICAL);
 		separator_2_2.setForeground(Color.LIGHT_GRAY);
 		separator_2_2.setBackground(new Color(248, 248, 255));
-		separator_2_2.setBounds(371, 107, 14, 267);
+		separator_2_2.setBounds(371, 107, 14, 281);
 		panel_2.add(separator_2_2);
+
+		
+		JLabel lblNewLabel_1_1_2_1 = new JLabel("Fecha de Inicio");
+		lblNewLabel_1_1_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		lblNewLabel_1_1_2_1.setBounds(31, 307, 199, 34);
+		panel_2.add(lblNewLabel_1_1_2_1);
+		
+		if (AccionFormulario.Modificar.equals(accion)) {
+			
+			ac = actividadBean.getActividadById(idAc);
+			txtTitulo.setText(ac.getNombre());
+			taDescripcion.setText(ac.getDescripcion());
+			
+		}
 
 	}
 	
@@ -320,5 +360,4 @@ public  class FrmActividadCampoAM extends JFrame {
 			tf.setText("");
 		}
 	}
-	
 }

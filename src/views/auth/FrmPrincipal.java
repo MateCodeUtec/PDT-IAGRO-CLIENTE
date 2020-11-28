@@ -230,7 +230,7 @@ public class FrmPrincipal extends JFrame {
 		btnFormularioListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				FrmListadoForm frmListado = new FrmListadoForm(AccionFormulario.Modificar, usuario);
+				FrmListadoForm frmListado = new FrmListadoForm(AccionFormulario.Listar, usuario);
 				frmListado.setVisible(true);
 				
 			}
@@ -263,6 +263,12 @@ public class FrmPrincipal extends JFrame {
 		panel_formularios.add(btnFormularioEditar);
 
 		JButton btnFormularioEliminar = new JButton("");
+		btnFormularioEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrmListadoForm frmListado = new FrmListadoForm(AccionFormulario.Eliminar, usuario);
+				frmListado.setVisible(true);
+			}
+		});
 		btnFormularioEliminar
 				.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/eliminar.png")));
 		btnFormularioEliminar.setToolTipText("Eliminar usuario");
@@ -314,11 +320,11 @@ public class FrmPrincipal extends JFrame {
 		btnFormularioAlta_1.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/anadir.png")));
 		btnFormularioAlta_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrmActividadCampoAM frmReporte = new FrmActividadCampoAM(AccionFormulario.Alta, usuario);
+				FrmActividadCampoAM frmReporte = new FrmActividadCampoAM(AccionFormulario.Alta, usuario, null);
 				frmReporte.setVisible(true);
 			}
 		});
-		btnFormularioAlta_1.setToolTipText("Alta de formulario");
+		btnFormularioAlta_1.setToolTipText("Alta de actividad de campo");
 		btnFormularioAlta_1.setForeground(Color.WHITE);
 		btnFormularioAlta_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnFormularioAlta_1.setBorderPainted(false);
@@ -330,12 +336,12 @@ public class FrmPrincipal extends JFrame {
 		JButton btnFormularioListar_1 = new JButton("");
 		btnFormularioListar_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrmListadoActividad frmActivdad = new FrmListadoActividad(null);
-				frmActivdad.setVisible(true);
+				FrmListadoActividad frmActividad = new FrmListadoActividad(AccionFormulario.Listar, usuario);
+				frmActividad.setVisible(true);
 			}
 		});
 		btnFormularioListar_1.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/listar.png")));
-		btnFormularioListar_1.setToolTipText("Listar formularios");
+		btnFormularioListar_1.setToolTipText("Listar actividades de campo");
 		btnFormularioListar_1.setForeground(Color.WHITE);
 		btnFormularioListar_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnFormularioListar_1.setBorder(null);
@@ -344,8 +350,16 @@ public class FrmPrincipal extends JFrame {
 		panel_formularios_1.add(btnFormularioListar_1);
 		
 		JButton btnFormularioEditar_1 = new JButton("");
+		btnFormularioEditar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				FrmListadoActividad frmActividad = new FrmListadoActividad(AccionFormulario.Modificar, usuario);
+				frmActividad.setVisible(true);
+				
+			}
+		});
 		btnFormularioEditar_1.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/edit.png")));
-		btnFormularioEditar_1.setToolTipText("Editar formulario");
+		btnFormularioEditar_1.setToolTipText("Editar actividades de campo");
 		btnFormularioEditar_1.setForeground(Color.WHITE);
 		btnFormularioEditar_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnFormularioEditar_1.setBorder(null);
@@ -355,7 +369,7 @@ public class FrmPrincipal extends JFrame {
 		
 		JButton btnFormularioEliminar_1 = new JButton("");
 		btnFormularioEliminar_1.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/eliminar.png")));
-		btnFormularioEliminar_1.setToolTipText("Eliminar usuario");
+		btnFormularioEliminar_1.setToolTipText("Eliminar activdad de campo");
 		btnFormularioEliminar_1.setForeground(Color.WHITE);
 		btnFormularioEliminar_1.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnFormularioEliminar_1.setBorder(null);

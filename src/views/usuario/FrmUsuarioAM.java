@@ -119,6 +119,20 @@ public class FrmUsuarioAM extends JFrame {
 		
 
 		txtNombre = new JTextField();
+		txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				var palabra = txtNombre.getText();
+				
+				if(Validaciones.esLetraOEspacio(e.getKeyChar())) {
+					txtNombre.setText(palabra);
+				}else {
+					txtNombre.setText(palabra.substring(0, palabra.length() - 1));
+				}
+				
+			}
+		});
 		txtNombre.setVerifyInputWhenFocusTarget(false);
 		txtNombre.setForeground(new Color(0, 0, 0));
 		txtNombre.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -153,6 +167,20 @@ public class FrmUsuarioAM extends JFrame {
 		panel_2.add(btnCancelar);
 
 		txtApellido = new JTextField();
+		txtApellido.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				var palabra = txtApellido.getText();
+				
+				if(Validaciones.esLetraOEspacio(e.getKeyChar())) {
+					txtApellido.setText(palabra);
+				}else {
+					txtApellido.setText(palabra.substring(0, palabra.length() - 1));
+				}
+				
+			}
+		});
 		txtApellido.setVerifyInputWhenFocusTarget(false);
 		txtApellido.setForeground(new Color(0, 0, 0));
 		txtApellido.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -179,6 +207,20 @@ public class FrmUsuarioAM extends JFrame {
 		panel_2.add(lblNewLabel_1_1_2);
 
 		txtUsuario = new JTextField();
+		txtUsuario.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				var palabra = txtUsuario.getText();
+				
+				if(Validaciones.esLetra(e.getKeyChar()) && palabra.length() <= 8) {
+					txtUsuario.setText(palabra);
+				}else {
+					txtUsuario.setText(palabra.substring(0, palabra.length() - 1));
+				}
+				
+			}
+		});
 		txtUsuario.setVerifyInputWhenFocusTarget(false);
 		txtUsuario.setForeground(Color.BLACK);
 		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -234,7 +276,9 @@ public class FrmUsuarioAM extends JFrame {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				
+				
+				
 				try {
 					usuarioBean = (UsuarioBeanRemote) InitialContext
 							.doLookup("ejb:/IAGROEJB/UsuarioBean!services.UsuarioBeanRemote");
@@ -249,12 +293,25 @@ public class FrmUsuarioAM extends JFrame {
 				var mail = txtMail.getText();
 				var pass = txtPass.getText();
 				Rol r = (Rol) cbRol.getSelectedItem();
+				
 
 				if (Validaciones.esVacio(nombre) || Validaciones.esVacio(apellido) || Validaciones.esVacio(usuario)
 						|| Validaciones.esVacio(pass) || Validaciones.esVacio(mail) || Validaciones.esVacio(r.getNombre()) ) {
 					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Ups!",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
+					
+					if(!Validaciones.password(pass)) {
+						JOptionPane.showMessageDialog(null, "La contraseña debe contener al menos 8 caracteres alfanumericos", "Ups!",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					
+					if(!Validaciones.esCorreo(mail)) {
+						JOptionPane.showMessageDialog(null, "El correo no tiene un formato valido", "Ups!",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 
 					Usuario u = new Usuario();
 					u.setNombre(nombre);

@@ -131,7 +131,11 @@ public class FrmListadoForm extends JFrame {
 		panel_2.add(lblNewLabel_1_1);
 		
 		JButton btnEliminar = new JButton("");
-		/*
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -139,41 +143,39 @@ public class FrmListadoForm extends JFrame {
 
 				if(row >= 0) {
 				    // Obtiene el valor de la celda 0 de la fila seleccionada
-				    String usuarioNombre = jtable_form.getModel().getValueAt(row, 0).toString(); 
+				    Long idForm = Long.parseLong(jtable_form.getModel().getValueAt(row, 0).toString()); 
 
 				    // Preguntamos si quiere eliminar el rol
-				    int pregunta = JOptionPane.showConfirmDialog(null,"¿Seguro que quieres eliminar este usuario?", "Eliminar usuario", JOptionPane.YES_NO_OPTION);
+				    int pregunta = JOptionPane.showConfirmDialog(null,"¿Seguro que quieres eliminar este formulario?", "Eliminar formulario", JOptionPane.YES_NO_OPTION);
 
 				    // Si la opcion es "YES" entonces llamamos al metodo del controlador de eliminar
 				    if(pregunta == JOptionPane.YES_OPTION){
 				    	
-				        Usuario usu;
 				        var eliminar = false;
 						try {
-							usu = uBean.getUsuario(usuarioNombre);
-							uBean.borrar(usu.getId());
+							formBean.desactivar(idForm);
 							eliminar = true;
 						} catch (Exception e1) {
-							// TODO Auto-generated catch block
+
 							e1.printStackTrace();
 						}
 				        
 				        if(eliminar) {
-				            JOptionPane.showMessageDialog(null,"Usuario eliminado", "Eliminar usuario", JOptionPane.INFORMATION_MESSAGE);
+				            JOptionPane.showMessageDialog(null,"Formulario eliminado", "Eliminar formulario", JOptionPane.INFORMATION_MESSAGE);
 				            
 				            construirTabla();
 				            
 				        }else {
-				            JOptionPane.showMessageDialog(null,"Error al eliminar un usuario", "Eliminar usuario", JOptionPane.ERROR_MESSAGE);
+				            JOptionPane.showMessageDialog(null,"Error al eliminar un formulario", "Eliminar formulario", JOptionPane.ERROR_MESSAGE);
 				        }
 				    }
 				    } else {
-				    JOptionPane.showMessageDialog(null,"Usted debe seleccionar el usuario que desea eliminar", "Eliminar usuario", JOptionPane.ERROR_MESSAGE);
+				    JOptionPane.showMessageDialog(null,"Usted debe seleccionar el formulario que desea eliminar", "Eliminar formulario", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			}
 		});
-		*/
+		
 		btnEliminar.setIcon(new ImageIcon(FrmListadoForm.class.getResource("/views/assets/icons/eliminar.png")));
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
