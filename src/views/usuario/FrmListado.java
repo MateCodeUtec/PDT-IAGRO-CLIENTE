@@ -119,11 +119,21 @@ public class FrmListado extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				
+				if (txtBuscar.getText().length()>0) {
+				
 				var filtradoPersona = miLista.stream()
-						.filter(p -> p.getNombre().contains(txtBuscar.getText()) || p.getUsuario().contains(txtBuscar.getText()) || p.getApellido().contains(txtBuscar.getText()))
+						.filter(p -> p.getNombre().contains(txtBuscar.getText()) || 
+								p.getUsuario().contains(txtBuscar.getText()) || 
+								p.getApellido().contains(txtBuscar.getText()) ||
+								p.getMail().contains(txtBuscar.getText()))
 						.collect(Collectors.toList());
 				miLista = (ArrayList<Usuario>) filtradoPersona;
 				construirTabla();
+				}
+				else {
+					miLista = (ArrayList<Usuario>) uBean.obtenerTodos();
+					construirTabla();
+				}
 			}
 		});
 		txtBuscar.setToolTipText("Buscar por Nombre, Apellido, Rol");
@@ -238,10 +248,11 @@ public class FrmListado extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Usuario", "Nombre", "Apellido", "Rol"
+					"Nombre", "Apellido", "Usuario" ,"Correo", "Rol"
 			}
 		));
 		scrollPaneUsuarios.setViewportView(jtable_usuarios);
+		miLista = (ArrayList<Usuario>) uBean.obtenerTodos();
 		construirTabla();
 		
 		
@@ -263,7 +274,7 @@ public class FrmListado extends JFrame {
 	 */
 	public void construirTabla() {
 		
-		String titulos [] = { "Nombre", "Apellido", "Usuario", "Rol"};
+		String titulos [] = { "Nombre", "Apellido", "Usuario" ,"Correo", "Rol"};
 		
 		String informacion [][] = obtenerMatriz();
 		
@@ -277,17 +288,16 @@ public class FrmListado extends JFrame {
 	 * @return matriz [][]
 	 */
 	private String[][] obtenerMatriz() {
-	
-		miLista = (ArrayList<Usuario>) uBean.obtenerTodos();
 		
-		String matrizInfo[][] = new String [miLista.size()][4];
+		String matrizInfo[][] = new String [miLista.size()][5];
 		
 		for( int i = 0 ; i< miLista.size() ; i++) {
 			
 			matrizInfo[i][0] = miLista.get(i).getNombre() + "";
 			matrizInfo[i][1] = miLista.get(i).getApellido() + "";
 			matrizInfo[i][2] = miLista.get(i).getUsuario() + "";
-			matrizInfo[i][3] = miLista.get(i).getRol().getNombre() + "";
+			matrizInfo[i][3] = miLista.get(i).getMail() + "";
+			matrizInfo[i][4] = miLista.get(i).getRol().getNombre() + "";
 			
 		}
 		return matrizInfo;

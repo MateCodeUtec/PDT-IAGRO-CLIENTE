@@ -1,5 +1,6 @@
 package helpers;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validaciones {
@@ -11,8 +12,8 @@ public class Validaciones {
 	public static boolean esVacio(String txt) {
 		return txt.isEmpty() || txt.isBlank();
 	}
-	/*
-	* Valida si es letra o un espacio
+	/**
+	 * Valida si es letra o un espacio
 	 * @param c
 	 * @return boolean
 	 */
@@ -36,30 +37,39 @@ public class Validaciones {
 	 */
 	public static boolean password(String pass) {
 		
+		var letra = false;
+		var numero = false;
+		
 		for (int i = 0; i < pass.length(); i++) {
 			if(!Character.isLetterOrDigit(pass.charAt(i))) {
 				return false;
 			}
+			
+			if(Character.isLetter(pass.charAt(i))) {
+				letra = true;
+			}
+			
+			if(Character.isDigit(pass.charAt(i))) {
+				numero = true;
+			}
 		}
 	
-		return pass.length() >= 8;
+		return letra && numero && pass.length() >= 8;
 	}
+	
+	
 	
 	/**
 	 * Valida si el formato del correo es correcto
 	 * @param email
 	 * @return boolean
 	 */
-   public static boolean esCorreo(String email) 
-   { 
-       String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ 
-                           "[a-zA-Z0-9_+&-]+)@" + 
-                           "(?:[a-zA-Z0-9-]+\\.)+[a-z" + 
-                           "A-Z]{2,7}$"; 
-                             
-       Pattern pat = Pattern.compile(emailRegex); 
-       if (email == null) 
-           return false; 
-       return pat.matcher(email).matches(); 
-   }
+    public static boolean esCorreo(String email) 
+    { 
+    	 Pattern VALID_EMAIL_ADDRESS_REGEX = 
+    			    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    	 
+    	 Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+    	 return matcher.find();
+    }
 }

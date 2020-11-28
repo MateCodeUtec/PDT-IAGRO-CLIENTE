@@ -121,18 +121,21 @@ public class FrmUsuarioAM extends JFrame {
 		txtNombre = new JTextField();
 		txtNombre.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyTyped(KeyEvent e) {
 				
 				var palabra = txtNombre.getText();
 				
 				if(Validaciones.esLetraOEspacio(e.getKeyChar())) {
 					txtNombre.setText(palabra);
 				}else {
-					txtNombre.setText(palabra.substring(0, palabra.length() - 1));
+					Toolkit.getDefaultToolkit().beep();
+					e.consume();
 				}
 				
 			}
 		});
+		
+		
 		txtNombre.setVerifyInputWhenFocusTarget(false);
 		txtNombre.setForeground(new Color(0, 0, 0));
 		txtNombre.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -169,18 +172,20 @@ public class FrmUsuarioAM extends JFrame {
 		txtApellido = new JTextField();
 		txtApellido.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyTyped(KeyEvent e) {
 				
-				var palabra = txtApellido.getText();
+				var palabra = txtNombre.getText();
 				
 				if(Validaciones.esLetraOEspacio(e.getKeyChar())) {
-					txtApellido.setText(palabra);
+					txtNombre.setText(palabra);
 				}else {
-					txtApellido.setText(palabra.substring(0, palabra.length() - 1));
+					Toolkit.getDefaultToolkit().beep();
+					e.consume();
 				}
 				
 			}
 		});
+		
 		txtApellido.setVerifyInputWhenFocusTarget(false);
 		txtApellido.setForeground(new Color(0, 0, 0));
 		txtApellido.setFont(new Font("Arial", Font.PLAIN, 12));
