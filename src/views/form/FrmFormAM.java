@@ -93,7 +93,7 @@ public  class FrmFormAM extends JFrame {
 	/**
 	 * Create the frame. 
 	 */
-	public FrmFormAM(AccionFormulario accion, Usuario u) {
+	public FrmFormAM(AccionFormulario accion, Usuario u, Formulario formParam) {
 		
 		listaParametros = new ArrayList<Parametro>();
 		
@@ -156,8 +156,6 @@ public  class FrmFormAM extends JFrame {
 		} catch (NamingException e2) {
 			e2.printStackTrace();
 		}
-		
-		
 
 		txtTitulo = new JTextField();
 		txtTitulo.setVerifyInputWhenFocusTarget(false);
@@ -189,7 +187,7 @@ public  class FrmFormAM extends JFrame {
 		btnCancelar.setForeground(Color.WHITE);
 		btnCancelar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnCancelar.setBorder(new LineBorder(new Color(119, 184, 105)));
-		btnCancelar.setBackground(new Color(102, 204, 0));
+		btnCancelar.setBackground(Color.LIGHT_GRAY);
 		btnCancelar.setBounds(31, 441, 162, 33);
 		panel_2.add(btnCancelar);
 
@@ -242,7 +240,7 @@ public  class FrmFormAM extends JFrame {
 		btnAgregarParam.setForeground(Color.WHITE);
 		btnAgregarParam.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnAgregarParam.setBorder(new LineBorder(new Color(119, 184, 105)));
-		btnAgregarParam.setBackground(new Color(102, 204, 0));
+		btnAgregarParam.setBackground(Color.LIGHT_GRAY);
 		btnAgregarParam.setBounds(759, 341, 144, 33);
 		panel_2.add(btnAgregarParam);
 		
@@ -259,7 +257,7 @@ public  class FrmFormAM extends JFrame {
 		btnModificar.setForeground(Color.WHITE);
 		btnModificar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnModificar.setBorder(new LineBorder(new Color(119, 184, 105)));
-		btnModificar.setBackground(new Color(119, 184, 105));
+		btnModificar.setBackground(Color.LIGHT_GRAY);
 		btnModificar.setBounds(203, 441, 162, 33);
 		panel_2.add(btnModificar);
 		
@@ -304,7 +302,7 @@ public  class FrmFormAM extends JFrame {
 		cbRol = new JComboBox();
 		cbRol.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
 		cbRol.setBorder(new LineBorder(new Color(119, 184, 105)));
-		cbRol.setBackground(new Color(102, 204, 51));
+		cbRol.setBackground(Color.WHITE);
 		cbRol.setBounds(673, 276, 230, 33);
 		panel_2.add(cbRol);
 		
@@ -313,10 +311,10 @@ public  class FrmFormAM extends JFrame {
 		lblNewLabel_1_1_2_1.setBounds(461, 276, 199, 14);
 		panel_2.add(lblNewLabel_1_1_2_1);
 		
-		JButton btnPreview = new JButton("Preview");
+		JButton btnPreview = new JButton("Vista previa");
 		btnPreview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				FrmPreview frmPreview = null;
 				tituloForm = txtTitulo.getText();
 				descripcionForm = taDescripcion.getText();
 				Visibilidad vis = (Visibilidad) cbVisibilidad.getSelectedItem();
@@ -327,22 +325,27 @@ public  class FrmFormAM extends JFrame {
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 				
-					
-					f = new Formulario();
+					if(accion.equals(AccionFormulario.Modificar))
+						f = formParam;
+					else 
+						f = new Formulario();
 					f.setTitulo(tituloForm);
 					f.setDescripcion(descripcionForm);
 					f.setVisibilidad(vis);
 					f.setUsuario(u);
-				
-				FrmPreview frmPreview = new FrmPreview(null);
-				frmPreview.setVisible(true);
+					
+					if(accion.equals(AccionFormulario.Modificar))
+						frmPreview = new FrmPreview(AccionFormulario.Modificar);
+					else
+						frmPreview = new FrmPreview(AccionFormulario.Alta);
+					frmPreview.setVisible(true);
 				}
 			}
 		});
 		btnPreview.setForeground(Color.WHITE);
 		btnPreview.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnPreview.setBorder(new LineBorder(new Color(119, 184, 105)));
-		btnPreview.setBackground(new Color(102, 204, 0));
+		btnPreview.setBackground(Color.LIGHT_GRAY);
 		btnPreview.setBounds(741, 441, 162, 33);
 		panel_2.add(btnPreview);
 		
@@ -355,7 +358,7 @@ public  class FrmFormAM extends JFrame {
 		cbVisibilidad = new JComboBox();
 		cbVisibilidad.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
 		cbVisibilidad.setBorder(new LineBorder(new Color(119, 184, 105)));
-		cbVisibilidad.setBackground(new Color(102, 204, 51));
+		cbVisibilidad.setBackground(Color.WHITE);
 		cbVisibilidad.setBounds(31, 341, 199, 33);
 		panel_2.add(cbVisibilidad);
 		panel_1.setLayout(null);
@@ -424,9 +427,31 @@ public  class FrmFormAM extends JFrame {
 		btnModificar.setVisible(false);
 
 		if (accion == AccionFormulario.Modificar) {
-			lblTitulo.setText("Modificar usuario");
+			lblTitulo.setText("Modificar formulario");
 			btnModificar.setVisible(true);
-	
+			txtTitulo.setText(formParam.getTitulo());
+			taDescripcion.setText(formParam.getDescripcion());
+			if (formParam.getUsaDepto().equals("S"))
+				checkDepto.setSelected(true);
+			if (formParam.getUsaEquip().equals("S"))
+				checkEquip.setSelected(true);
+			if (formParam.getUsaEstacion().equals("S"))
+				checkEstacion.setSelected(true);
+			if (formParam.getUsaFecha().equals("S"))
+				checkFecha.setSelected(true);
+			if (formParam.getUsaLocalidad().equals("S"))
+				checkLocalidad.setSelected(true);
+			if (formParam.getUsaMetodo().equals("S"))
+				checkMetodo.setSelected(true);
+			if (formParam.getUsaRegion().equals("S"))
+				checkRegion.setSelected(true);
+			cbVisibilidad.setSelectedItem(formParam.getVisibilidad());
+			if(formParam.getParametros() != null) {
+				FrmFormAM.listaParametros = new ArrayList<Parametro>();
+				FrmFormAM.listaParametros.addAll(formParam.getParametros());
+				construirTabla();
+			}
+			
 		}
 
 	}

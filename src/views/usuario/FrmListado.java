@@ -46,6 +46,7 @@ public class FrmListado extends JFrame {
 	private JScrollPane scrollPaneUsuarios;
 	private UsuarioBeanRemote uBean;
 	private ArrayList<Usuario> miLista = null;
+	private JLabel lblTitulo;
 	
 	/**
 	 * Create the frame.
@@ -85,7 +86,13 @@ public class FrmListado extends JFrame {
 		panel.setBackground(new Color(119, 184, 105));
 		panel.setLayout(null);
 		
-		JLabel lblTitulo = new JLabel("Listado de usuario");
+		if(AccionFormulario.Eliminar.equals(accion))
+			lblTitulo = new JLabel("Eliminar usuario");
+		else if (AccionFormulario.Modificar.equals(accion))
+			lblTitulo = new JLabel("Modificar usuario");
+		else if (AccionFormulario.Alta.equals(accion))
+			lblTitulo = new JLabel("Alta de usuario");
+		else	lblTitulo = new JLabel("Listado de usuario");	
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		lblTitulo.setBounds(39, 11, 257, 14);
 		panel.add(lblTitulo);

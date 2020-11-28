@@ -44,11 +44,12 @@ public class FrmListadoForm extends JFrame {
 	private JTable jtable_form;
 	private JScrollPane scrollPaneForm;
 	private FormularioBeanRemote formBean;
+	private JLabel lblTitulo;
 	
 	/**
 	 * Create the frame.
 	 */
-	public FrmListadoForm(AccionFormulario accion) {
+	public FrmListadoForm(AccionFormulario accion, Usuario u) {
 		
 		try {
 			formBean = (FormularioBeanRemote) InitialContext.doLookup("ejb:/IAGROEJB/FormularioBean!services.FormularioBeanRemote");			
@@ -80,7 +81,12 @@ public class FrmListadoForm extends JFrame {
 		panel.setBackground(new Color(119, 184, 105));
 		panel.setLayout(null);
 		
-		JLabel lblTitulo = new JLabel("Listado de formularios");
+		if(AccionFormulario.Eliminar.equals(accion))
+			lblTitulo = new JLabel("Eliminar formulario");
+		else if (AccionFormulario.Modificar.equals(accion))
+			lblTitulo = new JLabel("Modificar formulario");
+		else	
+			lblTitulo = new JLabel("Listado de formulario");	
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		lblTitulo.setBounds(39, 11, 257, 14);
 		panel.add(lblTitulo);
@@ -173,11 +179,11 @@ public class FrmListadoForm extends JFrame {
 		btnEliminar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnEliminar.setBorder(new LineBorder(new Color(240, 248, 255)));
 		btnEliminar.setBackground(new Color(204, 204, 204));
-		btnEliminar.setBounds(41, 110, 45, 33);
+		btnEliminar.setBounds(31, 110, 45, 33);
 		panel_2.add(btnEliminar);
 		
 		JButton btnEditar = new JButton("");
-		/*
+		
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int row = jtable_form.getSelectedRow(); 
@@ -191,16 +197,15 @@ public class FrmListadoForm extends JFrame {
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					} 
-				    FrmFormAM frm = new FrmFormAM(AccionFormulario.Modificar, f );
+				    FrmFormAM frm = new FrmFormAM(AccionFormulario.Modificar, u, f );
 				    frm.setVisible(true);
 				    setVisible(false);
 
 				}else {
-				    JOptionPane.showMessageDialog(null,"Usted debe seleccionar el usuario que desea modificar", "Modificar usuario", JOptionPane.ERROR_MESSAGE);
+				    JOptionPane.showMessageDialog(null,"Usted debe seleccionar el formulario que desea modificar", "Modificar formulario", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
-		*/
 		btnEditar.setIcon(new ImageIcon(FrmListadoForm.class.getResource("/views/assets/icons/edit.png")));
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setFont(new Font("Segoe UI", Font.PLAIN, 14));

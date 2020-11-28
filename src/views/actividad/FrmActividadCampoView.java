@@ -159,7 +159,7 @@ public class FrmActividadCampoView extends JFrame {
 		panel.setBackground(new Color(119, 184, 105));
 		panel.setLayout(null);
 
-		JLabel lblTitulo = new JLabel("Vista previa del formulario");
+		JLabel lblTitulo = new JLabel("Carga de actividad de campo");
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		lblTitulo.setBounds(39, 11, 257, 14);
@@ -330,7 +330,7 @@ public class FrmActividadCampoView extends JFrame {
 		lblTitulo_1.setBounds(10, 10, 151, 23);
 		panel_1.add(lblTitulo_1);
 
-		JButton btnCrearForm = new JButton("Crear formulario");
+		JButton btnCrearForm = new JButton("Guardar");
 		btnCrearForm.setBounds(10, 522, 176, 39);
 		panel_2.add(btnCrearForm);
 

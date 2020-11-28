@@ -210,7 +210,7 @@ public class FrmPrincipal extends JFrame {
 		btnFormularioAlta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				FrmFormAM frm = new FrmFormAM(AccionFormulario.Alta, usuario);
+				FrmFormAM frm = new FrmFormAM(AccionFormulario.Alta, usuario, null);
 				frm.setVisible(true);
 
 			}
@@ -230,7 +230,7 @@ public class FrmPrincipal extends JFrame {
 		btnFormularioListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				FrmListadoForm frmListado = new FrmListadoForm(AccionFormulario.Listar);
+				FrmListadoForm frmListado = new FrmListadoForm(AccionFormulario.Modificar, usuario);
 				frmListado.setVisible(true);
 				
 			}
@@ -247,6 +247,9 @@ public class FrmPrincipal extends JFrame {
 		JButton btnFormularioEditar = new JButton("");
 		btnFormularioEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				FrmListadoForm frmListado = new FrmListadoForm(AccionFormulario.Modificar, usuario);
+				frmListado.setVisible(true);
 				
 			}
 		});
@@ -300,6 +303,7 @@ public class FrmPrincipal extends JFrame {
 		panel_formularios_1.add(lblActividad);
 		
 		JLabel lblNewLabel_3_1_1 = new JLabel("");
+		lblNewLabel_3_1_1.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/ac.png")));
 		lblNewLabel_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		lblNewLabel_3_1_1.setBackground(Color.WHITE);

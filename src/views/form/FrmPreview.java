@@ -90,6 +90,7 @@ public class FrmPreview extends JFrame {
 	private JComboBox cbEquip = new JComboBox<Equipamiento>();
 	private Set<Metodo> metodos;
 	private Set<Equipamiento> equipamientos;
+	private JButton btnCrearForm;
 
 	/**
 	 * Create the frame.
@@ -317,14 +318,18 @@ public class FrmPreview extends JFrame {
 		lblTitulo_1.setBackground(Color.WHITE);
 		lblTitulo_1.setBounds(10, 10, 151, 23);
 		panel_1.add(lblTitulo_1);
-
-		JButton btnCrearForm = new JButton("Crear formulario");
+		
+		if(AccionFormulario.Modificar.equals(accion))
+			btnCrearForm = new JButton("Modificar formulario");
+		else
+			btnCrearForm = new JButton("Crear formulario");
 		btnCrearForm.setBounds(10, 522, 176, 39);
 		panel_2.add(btnCrearForm);
 
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(745, 522, 176, 39);
 		panel_2.add(btnVolver);
+		
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -337,8 +342,13 @@ public class FrmPreview extends JFrame {
 
 					Set<Parametro> hashSetParametros = new HashSet<>(FrmFormAM.listaParametros);
 					FrmFormAM.f.setParametros(hashSetParametros);
-					formularioBean.crear(FrmFormAM.f);
-					JOptionPane.showMessageDialog(null, "Formulario guardado con exito");
+					if(AccionFormulario.Modificar.equals(accion)) {
+						formularioBean.actualizar(FrmFormAM.f);
+						JOptionPane.showMessageDialog(null, "Formulario modificado con exito");
+					} else if (AccionFormulario.Alta.equals(accion)) {
+						formularioBean.crear(FrmFormAM.f);
+						JOptionPane.showMessageDialog(null, "Formulario guardado con exito");
+					}
 					
 					FrmFormAM.f = null;
 
