@@ -187,6 +187,7 @@ public class FrmListado extends JFrame {
 				        if(eliminar) {
 				            JOptionPane.showMessageDialog(null,"Usuario eliminado", "Eliminar usuario", JOptionPane.INFORMATION_MESSAGE);
 				            
+				            miLista = (ArrayList<Usuario>) uBean.obtenerTodos();
 				            construirTabla();
 				            
 				        }else {

@@ -248,18 +248,6 @@ public  class FrmFormAM extends JFrame {
 		lblIdForm.setVisible(false);
 		lblIdForm.setBounds(468, 418, 45, 13);
 		panel_2.add(lblIdForm);
-
-		JButton btnModificar = new JButton("Modificar");
-		btnModificar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnModificar.setForeground(Color.WHITE);
-		btnModificar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnModificar.setBorder(new LineBorder(new Color(119, 184, 105)));
-		btnModificar.setBackground(Color.LIGHT_GRAY);
-		btnModificar.setBounds(203, 441, 162, 33);
-		panel_2.add(btnModificar);
 		
 		
 		JSeparator separator_1 = new JSeparator();
@@ -320,8 +308,8 @@ public  class FrmFormAM extends JFrame {
 				Visibilidad vis = (Visibilidad) cbVisibilidad.getSelectedItem();
 				
 				
-				if (Validaciones.esVacio(tituloForm) || Validaciones.esVacio(descripcionForm)) {
-					JOptionPane.showMessageDialog(null, "Todos los campos son obligatorios", "Ups!",
+				if (Validaciones.esVacio(tituloForm)) {
+					JOptionPane.showMessageDialog(null, "El titulo es obligatorio", "Ups!",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
 				
@@ -424,11 +412,8 @@ public  class FrmFormAM extends JFrame {
 
 		comboTipoParam();
 		comboVisibilidad();
-		btnModificar.setVisible(false);
 
 		if (accion == AccionFormulario.Modificar) {
-			lblTitulo.setText("Modificar formulario");
-			btnModificar.setVisible(true);
 			txtTitulo.setText(formParam.getTitulo());
 			taDescripcion.setText(formParam.getDescripcion());
 			if (formParam.getUsaDepto().equals("S"))

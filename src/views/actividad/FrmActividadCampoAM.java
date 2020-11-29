@@ -180,7 +180,7 @@ public  class FrmActividadCampoAM extends JFrame {
 		lblNewLabel_1_1.setBounds(31, 73, 199, 28);
 		panel_2.add(lblNewLabel_1_1);
 
-		JButton btnCancelar = new JButton("Cancelar");
+		JButton btnCancelar = new JButton("Volver");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);

@@ -340,7 +340,7 @@ public class FrmUsuarioAM extends JFrame {
 						setVisible(false);
 						
 					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(null, "El usuario ya existe", "Ups!",
+						JOptionPane.showMessageDialog(null, "El usuario o correo ya ha sido registrado", "Ups!",
 								JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
 					}
