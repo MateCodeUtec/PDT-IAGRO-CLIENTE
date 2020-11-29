@@ -214,17 +214,17 @@ public class FrmUsuarioAM extends JFrame {
 		txtUsuario = new JTextField();
 		txtUsuario.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyReleased(KeyEvent e) {
-				
+			public void keyTyped(KeyEvent e) {
 				var palabra = txtUsuario.getText();
 				
-				if(Validaciones.esLetra(e.getKeyChar()) && palabra.length() <= 8) {
+				if(Validaciones.esLetra(e.getKeyChar())) {
 					txtUsuario.setText(palabra);
 				}else {
-					txtUsuario.setText(palabra.substring(0, palabra.length() - 1));
+					Toolkit.getDefaultToolkit().beep();
+					e.consume();
 				}
-				
 			}
+			
 		});
 		txtUsuario.setVerifyInputWhenFocusTarget(false);
 		txtUsuario.setForeground(Color.BLACK);
@@ -314,6 +314,12 @@ public class FrmUsuarioAM extends JFrame {
 					
 					if(!Validaciones.esCorreo(mail)) {
 						JOptionPane.showMessageDialog(null, "El correo no tiene un formato valido", "Ups!",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					
+					if(usuario.length() < 8) {
+						JOptionPane.showMessageDialog(null, "El usuario debe contener al menos 8 caracteres", "Ups!",
 								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
