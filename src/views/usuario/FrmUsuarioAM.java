@@ -85,7 +85,8 @@ public class FrmUsuarioAM extends JFrame {
 		panel.setLayout(null);
 
 		JLabel lblTitulo = new JLabel("Alta de usuario");
-		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblTitulo.setForeground(Color.WHITE);
+		lblTitulo.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
 		lblTitulo.setBounds(39, 11, 257, 14);
 		panel.add(lblTitulo);
 
@@ -96,6 +97,7 @@ public class FrmUsuarioAM extends JFrame {
 		panel.add(lblNewLabel_2);
 
 		JLabel lblCerrarSesion = new JLabel("X");
+		lblCerrarSesion.setForeground(Color.WHITE);
 		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCerrarSesion.addMouseListener(new MouseAdapter() {
 			@Override
@@ -103,9 +105,9 @@ public class FrmUsuarioAM extends JFrame {
 				setVisible(false);
 			}
 		});
-		lblCerrarSesion.setBounds(461, 11, 19, 14);
+		lblCerrarSesion.setBounds(461, 0, 29, 25);
 		panel.add(lblCerrarSesion);
-		lblCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblCerrarSesion.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
 		
 		//Llamo al bean
 		try {
@@ -138,7 +140,7 @@ public class FrmUsuarioAM extends JFrame {
 		
 		txtNombre.setVerifyInputWhenFocusTarget(false);
 		txtNombre.setForeground(new Color(0, 0, 0));
-		txtNombre.setFont(new Font("Arial", Font.PLAIN, 12));
+		txtNombre.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		txtNombre.setColumns(10);
 		txtNombre.setBorder(null);
 		txtNombre.setBackground(new Color(255, 255, 255));
@@ -152,7 +154,7 @@ public class FrmUsuarioAM extends JFrame {
 		panel_2.add(separator);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Nombre");
-		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		lblNewLabel_1_1.setBounds(31, 66, 199, 14);
 		panel_2.add(lblNewLabel_1_1);
 
@@ -163,7 +165,7 @@ public class FrmUsuarioAM extends JFrame {
 			}
 		});
 		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		btnCancelar.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		btnCancelar.setBorder(new LineBorder(new Color(240, 248, 255)));
 		btnCancelar.setBackground(new Color(204, 204, 204));
 		btnCancelar.setBounds(143, 352, 102, 33);
@@ -188,7 +190,7 @@ public class FrmUsuarioAM extends JFrame {
 		
 		txtApellido.setVerifyInputWhenFocusTarget(false);
 		txtApellido.setForeground(new Color(0, 0, 0));
-		txtApellido.setFont(new Font("Arial", Font.PLAIN, 12));
+		txtApellido.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		txtApellido.setColumns(10);
 		txtApellido.setBorder(null);
 		txtApellido.setBackground(Color.WHITE);
@@ -196,7 +198,7 @@ public class FrmUsuarioAM extends JFrame {
 		panel_2.add(txtApellido);
 
 		JLabel lblNewLabel_1_1_1 = new JLabel("Apellido");
-		lblNewLabel_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		lblNewLabel_1_1_1.setBounds(263, 66, 199, 14);
 		panel_2.add(lblNewLabel_1_1_1);
 
@@ -207,7 +209,7 @@ public class FrmUsuarioAM extends JFrame {
 		panel_2.add(separator_1);
 
 		JLabel lblNewLabel_1_1_2 = new JLabel("Usuario");
-		lblNewLabel_1_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1_2.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		lblNewLabel_1_1_2.setBounds(31, 158, 199, 14);
 		panel_2.add(lblNewLabel_1_1_2);
 
@@ -228,7 +230,7 @@ public class FrmUsuarioAM extends JFrame {
 		});
 		txtUsuario.setVerifyInputWhenFocusTarget(false);
 		txtUsuario.setForeground(Color.BLACK);
-		txtUsuario.setFont(new Font("Arial", Font.PLAIN, 12));
+		txtUsuario.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		txtUsuario.setColumns(10);
 		txtUsuario.setBorder(null);
 		txtUsuario.setBackground(Color.WHITE);
@@ -248,12 +250,12 @@ public class FrmUsuarioAM extends JFrame {
 		panel_2.add(separator_1_1);
 
 		JLabel lblNewLabel_1_1_1_1 = new JLabel("Contrase\u00F1a");
-		lblNewLabel_1_1_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1_1_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		lblNewLabel_1_1_1_1.setBounds(263, 158, 199, 14);
 		panel_2.add(lblNewLabel_1_1_1_1);
 
 		JLabel lblNewLabel_1_1_2_1 = new JLabel("Rol");
-		lblNewLabel_1_1_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1_2_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		lblNewLabel_1_1_2_1.setBounds(263, 249, 199, 14);
 		panel_2.add(lblNewLabel_1_1_2_1);
 
@@ -272,9 +274,10 @@ public class FrmUsuarioAM extends JFrame {
 		panel_2.add(txtPass);
 
 		cbRol = new JComboBox();
+		cbRol.setFont(new Font("Gill Sans MT", Font.PLAIN, 12));
 		cbRol.setBorder(null);
 		cbRol.setBackground(Color.WHITE);
-		cbRol.setBounds(263, 274, 199, 33);
+		cbRol.setBounds(263, 274, 199, 22);
 		panel_2.add(cbRol);
 		comboRoles();
 
@@ -350,7 +353,7 @@ public class FrmUsuarioAM extends JFrame {
 
 		});
 		btnGuardar.setForeground(Color.WHITE);
-		btnGuardar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+		btnGuardar.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		btnGuardar.setBorder(new LineBorder(new Color(240, 248, 255)));
 		btnGuardar.setBackground(new Color(119, 184, 105));
 		btnGuardar.setBounds(31, 352, 102, 33);
@@ -414,7 +417,7 @@ public class FrmUsuarioAM extends JFrame {
 		txtMail = new JTextField();
 		txtMail.setVerifyInputWhenFocusTarget(false);
 		txtMail.setForeground(Color.BLACK);
-		txtMail.setFont(new Font("Arial", Font.PLAIN, 12));
+		txtMail.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		txtMail.setColumns(10);
 		txtMail.setBorder(null);
 		txtMail.setBackground(Color.WHITE);
@@ -422,7 +425,7 @@ public class FrmUsuarioAM extends JFrame {
 		panel_2.add(txtMail);
 		
 		JLabel lblNewLabel_1_1_2_2 = new JLabel("Correo");
-		lblNewLabel_1_1_2_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1_2_2.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		lblNewLabel_1_1_2_2.setBounds(31, 249, 199, 14);
 		panel_2.add(lblNewLabel_1_1_2_2);
 		

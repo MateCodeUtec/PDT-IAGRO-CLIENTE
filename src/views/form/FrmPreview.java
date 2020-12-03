@@ -90,7 +90,7 @@ public class FrmPreview extends JFrame {
 	private JComboBox cbEquip = new JComboBox<Equipamiento>();
 	private Set<Metodo> metodos;
 	private Set<Equipamiento> equipamientos;
-	private JButton btnCrearForm;
+	private JButton btnCrearForm ;
 
 	/**
 	 * Create the frame.
@@ -150,7 +150,7 @@ public class FrmPreview extends JFrame {
 
 		JLabel lblTitulo = new JLabel("Vista previa del formulario");
 		lblTitulo.setForeground(Color.WHITE);
-		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblTitulo.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
 		lblTitulo.setBounds(39, 11, 257, 14);
 		panel.add(lblTitulo);
 
@@ -161,6 +161,7 @@ public class FrmPreview extends JFrame {
 		panel.add(lblNewLabel_2);
 
 		JLabel lblCerrarSesion = new JLabel("X");
+		lblCerrarSesion.setForeground(Color.WHITE);
 		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCerrarSesion.addMouseListener(new MouseAdapter() {
 			@Override
@@ -168,9 +169,9 @@ public class FrmPreview extends JFrame {
 				setVisible(false);
 			}
 		});
-		lblCerrarSesion.setBounds(883, 11, 19, 14);
+		lblCerrarSesion.setBounds(904, 0, 27, 25);
 		panel.add(lblCerrarSesion);
-		lblCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblCerrarSesion.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(null);
@@ -182,38 +183,38 @@ public class FrmPreview extends JFrame {
 		cbDepto = new JComboBox();
 		cbDepto.setBackground(Color.WHITE);
 		cbDepto.setVisible(false);
-		cbDepto.setBounds(597, 110, 151, 32);
+		cbDepto.setBounds(597, 119, 151, 23);
 		panel_1.add(cbDepto);
 		comboDepartamento();
 
 		cbEstacion = new JComboBox();
 		cbEstacion.setBackground(Color.WHITE);
 		cbEstacion.setVisible(false);
-		cbEstacion.setBounds(591, 33, 151, 32);
+		cbEstacion.setBounds(591, 42, 151, 23);
 		panel_1.add(cbEstacion);
 		comboEstacion();
 
 		cbRegion = new JComboBox();
 		cbRegion.setBackground(Color.WHITE);
 		cbRegion.setVisible(false);
-		cbRegion.setBounds(418, 110, 151, 32);
+		cbRegion.setBounds(418, 119, 151, 23);
 		panel_1.add(cbRegion);
 		comboRegion();
 
 		JLabel lblDepto = new JLabel("Departamento");
-		lblDepto.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		lblDepto.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblDepto.setBounds(597, 88, 151, 23);
 		lblDepto.setVisible(false);
 		panel_1.add(lblDepto);
 
-		JLabel lblEstacion = new JLabel("Estacion");
-		lblEstacion.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		JLabel lblEstacion = new JLabel("Estaci\u00F3n");
+		lblEstacion.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblEstacion.setBounds(591, 10, 151, 23);
 		lblEstacion.setVisible(false);
 		panel_1.add(lblEstacion);
 
-		JLabel lblRegion = new JLabel("Region");
-		lblRegion.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		JLabel lblRegion = new JLabel("Regi\u00F3n");
+		lblRegion.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblRegion.setBounds(418, 88, 151, 23);
 		lblRegion.setVisible(false);
 		panel_1.add(lblRegion);
@@ -242,32 +243,33 @@ public class FrmPreview extends JFrame {
 
 		JLabel lblEquip = new JLabel("Equipamiento");
 		lblEquip.setVisible(false);
-		lblEquip.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		lblEquip.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblEquip.setBounds(239, 10, 151, 23);
 		panel_1.add(lblEquip);
 		comboEquip();
 
 		cbMetodo = new JComboBox();
+		cbMetodo.setFont(new Font("Gill Sans MT", Font.PLAIN, 12));
 		cbMetodo.setVisible(false);
 		cbMetodo.setBackground(Color.WHITE);
-		cbMetodo.setBounds(418, 33, 151, 32);
+		cbMetodo.setBounds(418, 42, 151, 23);
 		panel_1.add(cbMetodo);
 		comboMetodo();
 
-		JLabel lblMetodo = new JLabel("Metodo");
-		lblMetodo.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		JLabel lblMetodo = new JLabel("M\u00E9todo");
+		lblMetodo.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblMetodo.setBounds(418, 10, 151, 23);
 		lblMetodo.setVisible(false);
 		panel_1.add(lblMetodo);
 
 		JDateChooser dtFecha = new JDateChooser();
-		dtFecha.setBounds(770, 110, 151, 32);
+		dtFecha.setBounds(770, 119, 151, 23);
 		dtFecha.setDate(new Date());
 		dtFecha.setVisible(false);
 		panel_1.add(dtFecha);
 
 		JLabel lblFecha = new JLabel("Fecha");
-		lblFecha.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		lblFecha.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblFecha.setBounds(770, 88, 151, 23);
 		lblFecha.setVisible(false);
 		panel_1.add(lblFecha);
@@ -275,31 +277,33 @@ public class FrmPreview extends JFrame {
 		cbLocalidad = new JComboBox();
 		cbLocalidad.setBackground(Color.WHITE);
 		cbLocalidad.setVisible(false);
-		cbLocalidad.setBounds(770, 33, 151, 32);
+		cbLocalidad.setBounds(770, 42, 151, 23);
 		panel_1.add(cbLocalidad);
 		comboLocalidad();
 
 		JLabel lblLocalidad = new JLabel("Localidad");
-		lblLocalidad.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		lblLocalidad.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblLocalidad.setBounds(770, 10, 151, 23);
 		lblLocalidad.setVisible(false);
 		panel_1.add(lblLocalidad);
 		
 		cbEquip = new JComboBox();
+		cbEquip.setFont(new Font("Gill Sans MT", Font.PLAIN, 12));
 		cbEquip.setVisible(false);
 		cbEquip.setBackground(Color.WHITE);
-		cbEquip.setBounds(239, 33, 151, 32);
+		cbEquip.setBounds(239, 42, 151, 23);
 		panel_1.add(cbEquip);
+		comboMetodo();
 		
 		JLabel lblTituloForm = new JLabel("");
-		lblTituloForm.setBorder(new LineBorder(new Color(102, 204, 51)));
-		lblTituloForm.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
-		lblTituloForm.setBounds(10, 33, 198, 32);
+		lblTituloForm.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		lblTituloForm.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
+		lblTituloForm.setBounds(10, 42, 198, 23);
 		lblTituloForm.setText(FrmFormAM.tituloForm);
 		panel_1.add(lblTituloForm);
 		
 		JTextArea taDescForm = new JTextArea();
-		taDescForm.setBorder(new LineBorder(new Color(102, 204, 51)));
+		taDescForm.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		taDescForm.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
 		taDescForm.setEditable(false);
 		taDescForm.setBackground(Color.WHITE);
@@ -307,34 +311,36 @@ public class FrmPreview extends JFrame {
 		taDescForm.setText(FrmFormAM.descripcionForm);
 		panel_1.add(taDescForm);
 		
-		JLabel lblNewLabel = new JLabel("Descripcion");
-		lblNewLabel.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		JLabel lblNewLabel = new JLabel("Descripci\u00F3n");
+		lblNewLabel.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblNewLabel.setBackground(Color.WHITE);
 		lblNewLabel.setBounds(10, 70, 151, 23);
 		panel_1.add(lblNewLabel);
 		
-		JLabel lblTitulo_1 = new JLabel("Titulo");
-		lblTitulo_1.setFont(new Font("Segoe UI Light", Font.PLAIN, 14));
+		JLabel lblTitulo_1 = new JLabel("T\u00EDtulo");
+		lblTitulo_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblTitulo_1.setBackground(Color.WHITE);
 		lblTitulo_1.setBounds(10, 10, 151, 23);
 		panel_1.add(lblTitulo_1);
 		
+		JButton btnVolver = new JButton("Volver");
+		btnVolver.setBackground(SystemColor.control);
+		btnVolver.setForeground(Color.BLACK);
+		btnVolver.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
+		btnVolver.setBounds(10, 523, 172, 38);
+		panel_2.add(btnVolver);
+		
+		btnCrearForm = new JButton("Crear formulario");
+		btnCrearForm.setForeground(Color.WHITE);
 		if(AccionFormulario.Modificar.equals(accion))
 			btnCrearForm = new JButton("Modificar formulario");
 		else
 			btnCrearForm = new JButton("Crear formulario");
-		btnCrearForm.setBounds(10, 522, 176, 39);
-		panel_2.add(btnCrearForm);
-
-		JButton btnVolver = new JButton("Volver");
-		btnVolver.setBounds(745, 522, 176, 39);
-		panel_2.add(btnVolver);
-		
-		btnVolver.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
+		//btnCrearForm.setBounds(726, 523, 198, 38);
+		btnCrearForm.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
+		btnCrearForm.setBorder(null);
+		btnCrearForm.setVisible(true);
+		btnCrearForm.setBackground(new Color(119, 184, 105));
 		btnCrearForm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -360,7 +366,17 @@ public class FrmPreview extends JFrame {
 				}
 			}
 		});
+		panel_2.add(btnCrearForm);
 
+		btnCrearForm.setBounds(749, 523, 172, 38);
+		panel_2.add(btnCrearForm);
+		
+		btnVolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+			
 		if (FrmFormAM.checkDepto.isSelected()) {
 			cbDepto.setVisible(true);
 			lblDepto.setVisible(true);

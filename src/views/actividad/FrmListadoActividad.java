@@ -39,6 +39,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.ListSelectionModel;
+import com.toedter.calendar.JDateChooser;
 
 public class FrmListadoActividad extends JFrame {
 
@@ -87,7 +89,8 @@ public class FrmListadoActividad extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblTitulo = new JLabel("Listado de actividades de campo");
-		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblTitulo.setForeground(Color.WHITE);
+		lblTitulo.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
 		lblTitulo.setBounds(39, 11, 257, 14);
 		panel.add(lblTitulo);
 		
@@ -97,6 +100,7 @@ public class FrmListadoActividad extends JFrame {
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblCerrarSesion = new JLabel("X");
+		lblCerrarSesion.setForeground(Color.WHITE);
 		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCerrarSesion.addMouseListener(new MouseAdapter() {
 			@Override
@@ -104,29 +108,52 @@ public class FrmListadoActividad extends JFrame {
 				setVisible(false);
 			}
 		});
-		lblCerrarSesion.setBounds(709, 11, 19, 14);
+		lblCerrarSesion.setBounds(712, 0, 26, 25);
 		panel.add(lblCerrarSesion);
-		lblCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblCerrarSesion.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
 		
 		txtBuscar = new JTextField();
-		txtBuscar.setToolTipText("Buscar por Nombre, Apellido, Rol");
+		txtBuscar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				
+				if (txtBuscar.getText().length() > 0) {
+					/*
+					 * Filtro de miLista, a los que cumplan alguna condicion de .filter(), 
+					 * los agrego a la lista filtradoACtividad  con la funcion de la clase Collectors.toList(), 
+					 * y vuelvo a construir la tabla 
+					 */
+					var filtradoACtividad = miLista.stream()
+							.filter(p -> p.getNombre().contains(txtBuscar.getText())
+									|| p.getDescripcion().contains(txtBuscar.getText()))
+							.collect(Collectors.toList());
+					miLista = (ArrayList<ActividadCampo>) filtradoACtividad;
+					construirTabla();
+				} else {
+					miLista = (ArrayList<ActividadCampo>) actividadBean.obtenerTodos();
+					construirTabla();
+				}
+				
+			}
+		});
+		txtBuscar.setToolTipText("Buscar por Nombre, Descripcion, Rol");
 		txtBuscar.setVerifyInputWhenFocusTarget(false);
 		txtBuscar.setForeground(new Color(0, 0, 0));
 		txtBuscar.setFont(new Font("Arial", Font.PLAIN, 12));
 		txtBuscar.setColumns(10);
 		txtBuscar.setBorder(null);
 		txtBuscar.setBackground(new Color(255, 255, 255));
-		txtBuscar.setBounds(31, 67, 431, 33);
+		txtBuscar.setBounds(31, 67, 381, 33);
 		panel_2.add(txtBuscar);
 		
 		JSeparator separator = new JSeparator();
 		separator.setForeground(Color.LIGHT_GRAY);
 		separator.setBackground(new Color(248, 248, 255));
-		separator.setBounds(31, 102, 682, 10);
+		separator.setBounds(31, 102, 381, 10);
 		panel_2.add(separator);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Buscar");
-		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		lblNewLabel_1_1.setFont(new Font("Dialog", Font.PLAIN, 14));
 		lblNewLabel_1_1.setBounds(31, 50, 199, 14);
 		panel_2.add(lblNewLabel_1_1);
 		
@@ -141,7 +168,7 @@ public class FrmListadoActividad extends JFrame {
 				    Long idActividad = Long.parseLong(jtable_actividad.getModel().getValueAt(row, 0).toString());
 				    actividadBean.desactivar(idActividad);
 		            JOptionPane.showMessageDialog(null,"Formulario eliminado", "Eliminar formulario", JOptionPane.INFORMATION_MESSAGE);
-		   
+		            miLista = (ArrayList<ActividadCampo>) actividadBean.obtenerTodos();
 		            construirTabla();
 				     
 				}else {
@@ -154,9 +181,9 @@ public class FrmListadoActividad extends JFrame {
 		btnEliminar.setIcon(new ImageIcon(FrmListadoActividad.class.getResource("/views/assets/icons/eliminar.png")));
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnEliminar.setBorder(new LineBorder(new Color(240, 248, 255)));
-		btnEliminar.setBackground(new Color(204, 204, 204));
-		btnEliminar.setBounds(89, 111, 45, 33);
+		btnEliminar.setBorder(null);
+		btnEliminar.setBackground(Color.WHITE);
+		btnEliminar.setBounds(31, 131, 45, 33);
 		panel_2.add(btnEliminar);
 		
 		JButton btnEditar = new JButton("");
@@ -180,16 +207,17 @@ public class FrmListadoActividad extends JFrame {
 		btnEditar.setIcon(new ImageIcon(FrmListadoActividad.class.getResource("/views/assets/icons/edit.png")));
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnEditar.setBorder(new LineBorder(new Color(240, 248, 255)));
-		btnEditar.setBackground(new Color(204, 204, 204));
-		btnEditar.setBounds(31, 111, 45, 33);
+		btnEditar.setBorder(null);
+		btnEditar.setBackground(Color.WHITE);
+		btnEditar.setBounds(31, 131, 45, 33);
 		panel_2.add(btnEditar);
 		
 		scrollPaneUsuarios = new JScrollPane();
-		scrollPaneUsuarios.setBounds(31, 155, 682, 227);
+		scrollPaneUsuarios.setBounds(31, 174, 682, 208);
 		panel_2.add(scrollPaneUsuarios);
 		
 		jtable_actividad = new JTable();
+		jtable_actividad.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		jtable_actividad.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -198,6 +226,75 @@ public class FrmListadoActividad extends JFrame {
 			}
 		));
 		scrollPaneUsuarios.setViewportView(jtable_actividad);
+		
+		JButton btnReporte = new JButton("Reportar actividad");
+		btnReporte.setFont(new Font("Dialog", Font.PLAIN, 14));
+		btnReporte.setForeground(Color.WHITE);
+		btnReporte.setBorder(null);
+		btnReporte.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int row = jtable_actividad.getSelectedRow(); 
+
+				if(row >= 0) {
+				    // Obtiene el valor de la celda 0 de la fila seleccionada
+				    Long idActividad = Long.parseLong(jtable_actividad.getModel().getValueAt(row, 0).toString());
+				    ActividadCampo ac = actividadBean.getActividadById(idActividad);
+				    
+				    FrmActividadCampoView frmReporte = new FrmActividadCampoView(AccionFormulario.Alta, idActividad);
+					frmReporte.setVisible(true);
+				    
+				}else {
+				    JOptionPane.showMessageDialog(null,"Usted debe seleccionar la actividad de campo que desea utilizar", "Modificar actividad", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnReporte.setBounds(86, 130, 139, 33);
+		btnReporte.setBackground(new Color(119, 184, 105));
+		panel_2.add(btnReporte);
+		
+		JDateChooser dcFechaDesde = new JDateChooser();
+		dcFechaDesde.setBounds(522, 73, 191, 27);
+		panel_2.add(dcFechaDesde);
+		
+		JDateChooser dcFechaHasta = new JDateChooser();
+		dcFechaHasta.setBounds(522, 111, 191, 27);
+		panel_2.add(dcFechaHasta);
+		
+		JLabel lblNewLabel = new JLabel("Fecha desde: ");
+		lblNewLabel.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblNewLabel.setBounds(422, 73, 100, 27);
+		panel_2.add(lblNewLabel);
+		
+		JLabel lblFechaHasta = new JLabel("Fecha hasta:");
+		lblFechaHasta.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblFechaHasta.setBounds(422, 111, 100, 27);
+		panel_2.add(lblFechaHasta);
+		
+		JLabel lblBusquedaPorFecha = new JLabel("Busqueda por fecha de inicio de actividad");
+		lblBusquedaPorFecha.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblBusquedaPorFecha.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblBusquedaPorFecha.setBounds(422, 44, 291, 20);
+		panel_2.add(lblBusquedaPorFecha);
+		
+		JButton btnNewButton = new JButton("Buscar");
+		btnNewButton.setFont(new Font("Dialog", Font.PLAIN, 14));
+		btnNewButton.setForeground(Color.WHITE);
+		btnNewButton.setBorder(null);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				miLista = (ArrayList<ActividadCampo>) actividadBean.obtenerTodosRangoDeFechas(dcFechaDesde.getDate(), dcFechaHasta.getDate());
+	            construirTabla();
+				
+				
+			}
+		});
+		btnNewButton.setBounds(628, 144, 85, 27);
+		btnNewButton.setBackground(new Color(119, 184, 105));
+		panel_2.add(btnNewButton);
+		
+		//Cargo la lista de actividades usando el bean y llamo al metodo que construye la tabla con esa lista.
+		miLista = (ArrayList<ActividadCampo>) actividadBean.obtenerTodos();
 		construirTabla();
 		
 		
@@ -224,7 +321,9 @@ public class FrmListadoActividad extends JFrame {
 		String informacion [][] = obtenerMatriz();
 		
 		jtable_actividad = new JTable(informacion, titulos);
-		jtable_actividad.setBackground(SystemColor.activeCaptionBorder);
+		jtable_actividad.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jtable_actividad.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
+		jtable_actividad.setBackground(Color.WHITE);
 		scrollPaneUsuarios.setViewportView(jtable_actividad);
 	}
 	
@@ -233,8 +332,6 @@ public class FrmListadoActividad extends JFrame {
 	 * @return matriz [][]
 	 */
 	private String[][] obtenerMatriz() {
-	
-		miLista = (ArrayList<ActividadCampo>) actividadBean.obtenerTodos();
 		
 		String matrizInfo[][] = new String [miLista.size()][4];
 		

@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import enums.AccionFormulario;
 import enums.TipoDato;
@@ -62,8 +63,9 @@ import javax.swing.JTextArea;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JCheckBox;
+import javax.swing.ListSelectionModel;
 
-public  class FrmFormAM extends JFrame {
+public class FrmFormAM extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtTitulo;
@@ -82,21 +84,21 @@ public  class FrmFormAM extends JFrame {
 	public static JCheckBox checkEquip;
 	public static String tituloForm;
 	public static String descripcionForm;
-	
+
 	private JScrollPane scrollPaneParam;
 	private JTable jtable_param;
 	private JTextField txtNombre;
 	private JComboBox cbRol;
 	private JComboBox cbVisibilidad;
 	public static Formulario f;
-	
+
 	/**
-	 * Create the frame. 
+	 * Create the frame.
 	 */
 	public FrmFormAM(AccionFormulario accion, Usuario u, Formulario formParam) {
-		
+
 		listaParametros = new ArrayList<Parametro>();
-		
+
 		setUndecorated(true);
 		setTitle("IAGRO - Principal");
 		setIconImage(Toolkit.getDefaultToolkit()
@@ -122,30 +124,31 @@ public  class FrmFormAM extends JFrame {
 		panel.setBackground(new Color(119, 184, 105));
 		panel.setLayout(null);
 
-		JLabel lblTitulo = new JLabel("Alta de formulario");
-		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		JLabel lblTitulo = new JLabel("Alta de Formulario");
+		lblTitulo.setForeground(Color.WHITE);
+		lblTitulo.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
 		lblTitulo.setBounds(39, 11, 257, 14);
 		panel.add(lblTitulo);
 
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2
-				.setIcon(new ImageIcon(FrmFormAM.class.getResource("/views/assets/icons/icon-app-ventana.png")));
+		lblNewLabel_2.setIcon(new ImageIcon(FrmFormAM.class.getResource("/views/assets/icons/icon-app-ventana.png")));
 		lblNewLabel_2.setBounds(10, 11, 19, 16);
 		panel.add(lblNewLabel_2);
 
 		JLabel lblCerrarSesion = new JLabel("X");
-		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCerrarSesion.setForeground(Color.WHITE);
+		lblCerrarSesion.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCerrarSesion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
 			}
 		});
-		lblCerrarSesion.setBounds(869, 11, 19, 14);
+		lblCerrarSesion.setBounds(858, 0, 45, 25);
 		panel.add(lblCerrarSesion);
-		lblCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		
-		//Llamo al bean
+		lblCerrarSesion.setFont(new Font("Gill Sans MT", Font.BOLD, 13));
+
+		// Llamo al bean
 		try {
 			formularioBean = (FormularioBeanRemote) InitialContext
 					.doLookup("ejb:/IAGROEJB/FormularioBean!services.FormularioBeanRemote");
@@ -160,7 +163,7 @@ public  class FrmFormAM extends JFrame {
 		txtTitulo = new JTextField();
 		txtTitulo.setVerifyInputWhenFocusTarget(false);
 		txtTitulo.setForeground(new Color(0, 0, 0));
-		txtTitulo.setFont(new Font("Arial", Font.PLAIN, 12));
+		txtTitulo.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		txtTitulo.setColumns(10);
 		txtTitulo.setBorder(null);
 		txtTitulo.setBackground(new Color(255, 255, 255));
@@ -173,8 +176,8 @@ public  class FrmFormAM extends JFrame {
 		separator.setBounds(31, 170, 199, 10);
 		panel_2.add(separator);
 
-		JLabel lblNewLabel_1_1 = new JLabel("Titulo");
-		lblNewLabel_1_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		JLabel lblNewLabel_1_1 = new JLabel("T\u00EDtulo");
+		lblNewLabel_1_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		lblNewLabel_1_1.setBounds(31, 112, 199, 14);
 		panel_2.add(lblNewLabel_1_1);
 
@@ -182,17 +185,18 @@ public  class FrmFormAM extends JFrame {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				
 			}
 		});
 		btnCancelar.setForeground(Color.WHITE);
-		btnCancelar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnCancelar.setBorder(new LineBorder(new Color(119, 184, 105)));
-		btnCancelar.setBackground(Color.LIGHT_GRAY);
+		btnCancelar.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
+		btnCancelar.setBorder(new LineBorder(new Color(240, 248, 255)));
+		btnCancelar.setBackground(new Color(204, 204, 204));
 		btnCancelar.setBounds(31, 441, 162, 33);
 		panel_2.add(btnCancelar);
 
-		JLabel lblNewLabel_1_1_2 = new JLabel("Descripcion");
-		lblNewLabel_1_1_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		JLabel lblNewLabel_1_1_2 = new JLabel("Descripci\u00F3n");
+		lblNewLabel_1_1_2.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		lblNewLabel_1_1_2.setBounds(31, 203, 199, 14);
 		panel_2.add(lblNewLabel_1_1_2);
 
@@ -201,104 +205,101 @@ public  class FrmFormAM extends JFrame {
 		separator_2_1.setBackground(new Color(248, 248, 255));
 		separator_2_1.setBounds(10, 384, 893, 10);
 		panel_2.add(separator_2_1);
-		
-		JCheckBox checkBoxObligatorio = new JCheckBox("Es obligatorio");
-		checkBoxObligatorio.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+		JCheckBox checkBoxObligatorio = new JCheckBox("\u00BFEs obligatorio?");
+		checkBoxObligatorio.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		checkBoxObligatorio.setBackground(Color.WHITE);
 		checkBoxObligatorio.setBounds(461, 348, 144, 21);
 		panel_2.add(checkBoxObligatorio);
-		
+
 		JTextArea taDescripcion = new JTextArea();
-		taDescripcion.setBorder(new LineBorder(new Color(119, 184, 105)));
+		taDescripcion.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
+		taDescripcion.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		taDescripcion.setBounds(31, 224, 199, 85);
 		panel_2.add(taDescripcion);
-		
-		JButton btnAgregarParam = new JButton("Agregar Parametro");
+
+		JButton btnAgregarParam = new JButton("Agregar Par\u00E1metro");
 		btnAgregarParam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				if(txtNombre.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "Ingrese un nombre para el parametro", "Ups!",
+
+				if (txtNombre.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "Nombre de Parámetro obligatorio", "Ups!",
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-					
+
 				boolean obligatorio = checkBoxObligatorio.isSelected();
-				TipoDato tDato = DevuelveTipoDato.devuelveTipoDato(((String)(cbRol.getSelectedItem())));
-				
+				TipoDato tDato = DevuelveTipoDato.devuelveTipoDato(((String) (cbRol.getSelectedItem())));
+
 				TipoParametro tp = new TipoParametro(txtNombre.getText(), tDato);
-				
-				Parametro p = new Parametro(obligatorio,tp);
-				
+
+				Parametro p = new Parametro(obligatorio, tp);
+
 				FrmFormAM.listaParametros.add(p);
 				construirTabla();
 				txtNombre.setText("");
 				txtNombre.requestFocus();
-					
+
 			}
 		});
 		btnAgregarParam.setForeground(Color.WHITE);
-		btnAgregarParam.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnAgregarParam.setBorder(new LineBorder(new Color(119, 184, 105)));
-		btnAgregarParam.setBackground(Color.LIGHT_GRAY);
-		btnAgregarParam.setBounds(759, 341, 144, 33);
+		btnAgregarParam.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
+		btnAgregarParam.setBorder(null);
+		btnAgregarParam.setBackground(new Color(119, 184, 105));
+		btnAgregarParam.setBounds(741, 340, 162, 33);
 		panel_2.add(btnAgregarParam);
-		
+
 		JLabel lblIdForm = new JLabel("New label");
 		lblIdForm.setVisible(false);
 		lblIdForm.setBounds(468, 418, 45, 13);
 		panel_2.add(lblIdForm);
-		
-		
+
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(Color.LIGHT_GRAY);
 		separator_1.setBackground(new Color(248, 248, 255));
 		separator_1.setBounds(31, 319, 199, 10);
 		panel_2.add(separator_1);
-		
+
 		scrollPaneParam = new JScrollPane();
 		scrollPaneParam.setBounds(461, 112, 442, 154);
 		panel_2.add(scrollPaneParam);
-		
+
 		jtable_param = new JTable();
-		jtable_param.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"Nombre del parametro", "Tipo de Dato", "Obligatorio"
-			}
-		));
+		jtable_param.setBackground(Color.WHITE);
+		jtable_param.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
+		jtable_param.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { "Nombre del parámetro", "Tipo de Dato", "Obligatorio" }));
 		scrollPaneParam.setViewportView(jtable_param);
-		
+
 		txtNombre = new JTextField();
 		txtNombre.setVerifyInputWhenFocusTarget(false);
 		txtNombre.setForeground(Color.BLACK);
-		txtNombre.setFont(new Font("Arial", Font.PLAIN, 12));
+		txtNombre.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		txtNombre.setColumns(10);
 		txtNombre.setBorder(null);
 		txtNombre.setBackground(Color.WHITE);
 		txtNombre.setBounds(461, 296, 199, 33);
 		panel_2.add(txtNombre);
-		
+
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setForeground(Color.LIGHT_GRAY);
 		separator_2.setBackground(new Color(248, 248, 255));
 		separator_2.setBounds(461, 332, 199, 10);
 		panel_2.add(separator_2);
 		construirTabla();
-		
+
 		cbRol = new JComboBox();
-		cbRol.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
-		cbRol.setBorder(new LineBorder(new Color(119, 184, 105)));
+		cbRol.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
+		cbRol.setBorder(null);
 		cbRol.setBackground(Color.WHITE);
-		cbRol.setBounds(673, 276, 230, 33);
+		cbRol.setBounds(673, 276, 230, 21);
 		panel_2.add(cbRol);
-		
-		JLabel lblNewLabel_1_1_2_1 = new JLabel("Nombre del parametro");
-		lblNewLabel_1_1_2_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+
+		JLabel lblNewLabel_1_1_2_1 = new JLabel("Nombre del par\u00E1metro");
+		lblNewLabel_1_1_2_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		lblNewLabel_1_1_2_1.setBounds(461, 276, 199, 14);
 		panel_2.add(lblNewLabel_1_1_2_1);
-		
+
 		JButton btnPreview = new JButton("Vista previa");
 		btnPreview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -306,23 +307,21 @@ public  class FrmFormAM extends JFrame {
 				tituloForm = txtTitulo.getText();
 				descripcionForm = taDescripcion.getText();
 				Visibilidad vis = (Visibilidad) cbVisibilidad.getSelectedItem();
-				
-				
+
 				if (Validaciones.esVacio(tituloForm)) {
-					JOptionPane.showMessageDialog(null, "El titulo es obligatorio", "Ups!",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Título Obligatorio", "Ups!", JOptionPane.ERROR_MESSAGE);
 				} else {
-				
-					if(accion.equals(AccionFormulario.Modificar))
+
+					if (accion.equals(AccionFormulario.Modificar))
 						f = formParam;
-					else 
+					else
 						f = new Formulario();
 					f.setTitulo(tituloForm);
 					f.setDescripcion(descripcionForm);
 					f.setVisibilidad(vis);
 					f.setUsuario(u);
-					
-					if(accion.equals(AccionFormulario.Modificar))
+
+					if (accion.equals(AccionFormulario.Modificar))
 						frmPreview = new FrmPreview(AccionFormulario.Modificar);
 					else
 						frmPreview = new FrmPreview(AccionFormulario.Alta);
@@ -331,78 +330,78 @@ public  class FrmFormAM extends JFrame {
 			}
 		});
 		btnPreview.setForeground(Color.WHITE);
-		btnPreview.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnPreview.setBorder(new LineBorder(new Color(119, 184, 105)));
-		btnPreview.setBackground(Color.LIGHT_GRAY);
+		btnPreview.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
+		btnPreview.setBorder(null);
+		btnPreview.setBackground(new Color(119, 184, 105));
 		btnPreview.setBounds(741, 441, 162, 33);
 		panel_2.add(btnPreview);
-		
+
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(null);
 		panel_1.setBackground(new Color(255, 255, 255));
 		panel_1.setBounds(240, 112, 199, 262);
 		panel_2.add(panel_1);
-		
+
 		cbVisibilidad = new JComboBox();
-		cbVisibilidad.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
-		cbVisibilidad.setBorder(new LineBorder(new Color(119, 184, 105)));
+		cbVisibilidad.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
+		cbVisibilidad.setBorder(null);
 		cbVisibilidad.setBackground(Color.WHITE);
-		cbVisibilidad.setBounds(31, 341, 199, 33);
+		cbVisibilidad.setBounds(31, 348, 199, 21);
 		panel_2.add(cbVisibilidad);
 		panel_1.setLayout(null);
 
-		checkMetodo = new JCheckBox("Metodos de muestreo");
+		checkMetodo = new JCheckBox("M\u00E9todos de muestreo");
 		checkMetodo.setBackground(new Color(255, 255, 255));
-		checkMetodo.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkMetodo.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		checkMetodo.setBounds(3, 49, 190, 21);
 		panel_1.add(checkMetodo);
-		
+
 		checkRegion = new JCheckBox("Regiones");
 		checkRegion.setBackground(new Color(255, 255, 255));
-		checkRegion.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkRegion.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		checkRegion.setBounds(3, 84, 190, 21);
 		panel_1.add(checkRegion);
-		
+
 		checkLocalidad = new JCheckBox("Localidades");
 		checkLocalidad.setBackground(new Color(255, 255, 255));
-		checkLocalidad.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkLocalidad.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		checkLocalidad.setBounds(3, 154, 190, 21);
 		panel_1.add(checkLocalidad);
-		
+
 		checkEstacion = new JCheckBox("Estaciones de muestreo");
 		checkEstacion.setBackground(new Color(255, 255, 255));
-		checkEstacion.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkEstacion.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		checkEstacion.setBounds(3, 119, 190, 21);
 		panel_1.add(checkEstacion);
-		
+
 		checkFecha = new JCheckBox("Fecha");
 		checkFecha.setBackground(new Color(255, 255, 255));
-		checkFecha.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkFecha.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		checkFecha.setBounds(3, 189, 190, 21);
 		panel_1.add(checkFecha);
-		
+
 		checkDepto = new JCheckBox("Departamentos");
 		checkDepto.setBackground(new Color(255, 255, 255));
-		checkDepto.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkDepto.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		checkDepto.setBounds(3, 224, 190, 21);
 		panel_1.add(checkDepto);
-		
+
 		checkEquip = new JCheckBox("Equipamientos");
 		checkEquip.setBackground(new Color(255, 255, 255));
-		checkEquip.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
+		checkEquip.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		checkEquip.setBounds(3, 14, 190, 21);
 		panel_1.add(checkEquip);
-		
+
 		JLabel lblNewLabel = new JLabel("Selecciona los campos a visualizar");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel.setBounds(240, 89, 201, 13);
+		lblNewLabel.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
+		lblNewLabel.setBounds(240, 92, 201, 21);
 		panel_2.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("Agrega los campos necesarios");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(461, 89, 452, 13);
+
+		JLabel lblNewLabel_1 = new JLabel("Agregar Campos");
+		lblNewLabel_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(461, 92, 452, 21);
 		panel_2.add(lblNewLabel_1);
-		
+
 		JSeparator separator_2_2 = new JSeparator();
 		separator_2_2.setOrientation(SwingConstants.VERTICAL);
 		separator_2_2.setForeground(Color.LIGHT_GRAY);
@@ -431,51 +430,62 @@ public  class FrmFormAM extends JFrame {
 			if (formParam.getUsaRegion().equals("S"))
 				checkRegion.setSelected(true);
 			cbVisibilidad.setSelectedItem(formParam.getVisibilidad());
-			if(formParam.getParametros() != null) {
+			if (formParam.getParametros() != null) {
 				FrmFormAM.listaParametros = new ArrayList<Parametro>();
 				FrmFormAM.listaParametros.addAll(formParam.getParametros());
 				construirTabla();
 			}
-			
+
 		}
 
 	}
-	
+
 	/**
 	 * Contruimos la tabla en el ScrollPane
 	 */
 	public void construirTabla() {
-		
-		String titulos [] = { "Nombre", "Tipo de Parametro", "Obligatorio"};
-		
-		String informacion [][] = obtenerMatriz();
-		
+
+		String titulos[] = { "Nombre", "Tipo de Parámetro", "Obligatorio" };
+
+		String informacion[][] = obtenerMatriz();
+
 		jtable_param = new JTable(informacion, titulos);
-		jtable_param.setBackground(SystemColor.activeCaptionBorder);
+		jtable_param.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jtable_param.setSelectionBackground(new Color(119, 184, 105));
+		jtable_param.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
+		jtable_param.setBackground(Color.WHITE);
 		scrollPaneParam.setViewportView(jtable_param);
+		JTableHeader th;
+		th = jtable_param.getTableHeader();
+		Font fuente = new Font("Gill Sans MT", Font.PLAIN, 14);
+		th.setFont(fuente);
+		th.setBackground(SystemColor.control);
+
+		scrollPaneParam.getViewport().setBackground(SystemColor.control);
 	}
-	
+
 	/**
 	 * Completamos la tabla con datos
+	 * 
 	 * @return matriz [][]
 	 */
 	private String[][] obtenerMatriz() {
-		ArrayList<Parametro> miLista = null;	
+		ArrayList<Parametro> miLista = null;
 		miLista = (ArrayList<Parametro>) FrmFormAM.listaParametros;
-		
-		String matrizInfo[][] = new String [miLista.size()][3];
-		
-		for( int i = 0 ; i< miLista.size() ; i++) {
-			
+
+		String matrizInfo[][] = new String[miLista.size()][3];
+
+		for (int i = 0; i < miLista.size(); i++) {
+
 			String sn = "No";
 			if (miLista.get(i).isObligatorio()) {
 				sn = "Si";
 			}
-			
+
 			matrizInfo[i][0] = miLista.get(i).getTipo().getNombre() + "";
 			matrizInfo[i][1] = miLista.get(i).getTipo().getTipo() + "";
 			matrizInfo[i][2] = sn + "";
-			
+
 		}
 		return matrizInfo;
 	}
@@ -485,26 +495,27 @@ public  class FrmFormAM extends JFrame {
 			tf.setText("");
 		}
 	}
-	
-	public static void listarParametros() {	
+
+	public static void listarParametros() {
 		for (Parametro p : listaParametros) {
 			System.out.println(p.getTipo().getNombre());
 		}
 	}
-	
+
 	/**
 	 * Carga el combo de seleccionar TipoParametro
 	 */
 	public void comboTipoParam() {
-		
+
 		List<TipoDato> tiposDatos = Arrays.asList(TipoDato.values());
 
 		for (TipoDato tp : tiposDatos) {
 			cbRol.addItem(DevuelveTipoDato.devuelveString(tp.toString()));
 		}
 	}
+
 	public void comboVisibilidad() {
-		
+
 		List<Visibilidad> visibilidad = Arrays.asList(Visibilidad.values());
 
 		for (Visibilidad v : visibilidad) {

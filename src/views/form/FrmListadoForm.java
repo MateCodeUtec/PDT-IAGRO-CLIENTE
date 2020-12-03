@@ -21,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
@@ -28,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import enums.AccionFormulario;
 import models.Formulario;
@@ -36,6 +38,9 @@ import services.FormularioBeanRemote;
 import services.UsuarioBeanRemote;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class FrmListadoForm extends JFrame {
 
@@ -45,6 +50,7 @@ public class FrmListadoForm extends JFrame {
 	private JScrollPane scrollPaneForm;
 	private FormularioBeanRemote formBean;
 	private JLabel lblTitulo;
+	private ArrayList<Formulario> miLista = null;	
 	
 	/**
 	 * Create the frame.
@@ -87,9 +93,10 @@ public class FrmListadoForm extends JFrame {
 			lblTitulo = new JLabel("Modificar formulario");
 		else	
 			lblTitulo = new JLabel("Listado de formulario");	
-		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-		lblTitulo.setBounds(39, 11, 257, 14);
-		panel.add(lblTitulo);
+			lblTitulo.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
+			lblTitulo.setForeground(Color.WHITE);
+			lblTitulo.setBounds(39, 11, 257, 14);
+		    panel.add(lblTitulo);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setIcon(new ImageIcon(FrmListadoForm.class.getResource("/views/assets/icons/icon-app-ventana.png")));
@@ -97,6 +104,7 @@ public class FrmListadoForm extends JFrame {
 		panel.add(lblNewLabel_2);
 		
 		JLabel lblCerrarSesion = new JLabel("X");
+		lblCerrarSesion.setForeground(Color.WHITE);
 		lblCerrarSesion.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCerrarSesion.addMouseListener(new MouseAdapter() {
 			@Override
@@ -104,11 +112,30 @@ public class FrmListadoForm extends JFrame {
 				setVisible(false);
 			}
 		});
-		lblCerrarSesion.setBounds(709, 11, 19, 14);
+		lblCerrarSesion.setBounds(707, 0, 31, 25);
 		panel.add(lblCerrarSesion);
-		lblCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		lblCerrarSesion.setFont(new Font("Gill Sans MT", Font.BOLD, 14));
 		
 		txtBuscar = new JTextField();
+		txtBuscar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				
+				if (txtBuscar.getText().length() > 0) {
+
+					var filtradoForm = miLista.stream()
+							.filter(p -> p.getTitulo().contains(txtBuscar.getText())
+									|| p.getDescripcion().contains(txtBuscar.getText()))
+							.collect(Collectors.toList());
+					miLista = (ArrayList<Formulario>) filtradoForm;
+					construirTabla();
+				} else {
+					miLista = (ArrayList<Formulario>) formBean.obtenerTodos();
+					construirTabla();
+				}
+				
+			}
+		});
 		txtBuscar.setToolTipText("Buscar por Nombre, Apellido, Rol");
 		txtBuscar.setVerifyInputWhenFocusTarget(false);
 		txtBuscar.setForeground(new Color(0, 0, 0));
@@ -131,6 +158,7 @@ public class FrmListadoForm extends JFrame {
 		panel_2.add(lblNewLabel_1_1);
 		
 		JButton btnEliminar = new JButton("");
+		btnEliminar.setHorizontalAlignment(SwingConstants.LEFT);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -163,7 +191,8 @@ public class FrmListadoForm extends JFrame {
 				        if(eliminar) {
 				            JOptionPane.showMessageDialog(null,"Formulario eliminado", "Eliminar formulario", JOptionPane.INFORMATION_MESSAGE);
 				            
-				            construirTabla();
+				            miLista = (ArrayList<Formulario>) formBean.obtenerTodos();
+							construirTabla();
 				            
 				        }else {
 				            JOptionPane.showMessageDialog(null,"Error al eliminar un formulario", "Eliminar formulario", JOptionPane.ERROR_MESSAGE);
@@ -179,9 +208,9 @@ public class FrmListadoForm extends JFrame {
 		btnEliminar.setIcon(new ImageIcon(FrmListadoForm.class.getResource("/views/assets/icons/eliminar.png")));
 		btnEliminar.setForeground(Color.WHITE);
 		btnEliminar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnEliminar.setBorder(new LineBorder(new Color(240, 248, 255)));
-		btnEliminar.setBackground(new Color(204, 204, 204));
-		btnEliminar.setBounds(31, 110, 45, 33);
+		btnEliminar.setBorder(null);
+		btnEliminar.setBackground(Color.WHITE);
+		btnEliminar.setBounds(41, 111, 45, 33);
 		panel_2.add(btnEliminar);
 		
 		JButton btnEditar = new JButton("");
@@ -211,8 +240,8 @@ public class FrmListadoForm extends JFrame {
 		btnEditar.setIcon(new ImageIcon(FrmListadoForm.class.getResource("/views/assets/icons/edit.png")));
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-		btnEditar.setBorder(new LineBorder(new Color(240, 248, 255)));
-		btnEditar.setBackground(new Color(204, 204, 204));
+		btnEditar.setBorder(null);
+		btnEditar.setBackground(Color.WHITE);
 		btnEditar.setBounds(31, 111, 45, 33);
 		panel_2.add(btnEditar);
 		
@@ -221,6 +250,10 @@ public class FrmListadoForm extends JFrame {
 		panel_2.add(scrollPaneForm);
 		
 		jtable_form = new JTable();
+		jtable_form.setBackground(Color.WHITE);
+		jtable_form.setSelectionBackground(new Color(119, 184, 105));
+		jtable_form.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jtable_form.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		jtable_form.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -229,6 +262,7 @@ public class FrmListadoForm extends JFrame {
 			}
 		));
 		scrollPaneForm.setViewportView(jtable_form);
+		miLista = (ArrayList<Formulario>) formBean.obtenerTodos();	
 		construirTabla();
 		
 		
@@ -255,8 +289,19 @@ public class FrmListadoForm extends JFrame {
 		String informacion [][] = obtenerMatriz();
 		
 		jtable_form = new JTable(informacion, titulos);
-		jtable_form.setBackground(SystemColor.activeCaptionBorder);
+		jtable_form.setBackground(Color.WHITE);
+		jtable_form.setSelectionBackground(new Color(119, 184, 105));
+		jtable_form.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		jtable_form.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));	
 		scrollPaneForm.setViewportView(jtable_form);
+		
+		JTableHeader th;
+		th = jtable_form.getTableHeader();
+		Font fuente = new Font("Gill Sans MT", Font.PLAIN, 15);
+		th.setFont(fuente);
+		th.setBackground(SystemColor.control);
+
+		scrollPaneForm.getViewport().setBackground(SystemColor.control);
 	}
 	
 	/**
@@ -264,8 +309,6 @@ public class FrmListadoForm extends JFrame {
 	 * @return matriz [][]
 	 */
 	private String[][] obtenerMatriz() {
-		ArrayList<Formulario> miLista = null;	
-		miLista = (ArrayList<Formulario>) formBean.obtenerTodos();
 		
 		String matrizInfo[][] = new String [miLista.size()][3];
 		
