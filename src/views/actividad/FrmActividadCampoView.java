@@ -55,6 +55,9 @@ import services.LocalidadBeanRemote;
 import services.MetodoBeanRemote;
 import services.RegionBeanRemote;
 import services.UsuarioBeanRemote;
+import templates.TemplateBlob;
+import templates.TemplateBoolean;
+import templates.TemplateDate;
 import templates.TemplateString;
 import views.form.FrmListadoForm;
 
@@ -393,29 +396,104 @@ public class FrmActividadCampoView extends JFrame {
 		for (Parametro p : listaParam) {
 
 			if (cont < 5) {
-				TemplateString ts = new TemplateString();
-				ts.lblNewLabel.setText(p.getTipo().getNombre());
-				panel_3.add(ts);
+				if (p.getTipo().getTipo().equals(TipoDato.BOOLEAN)) {
+					TemplateBoolean ts = new TemplateBoolean();
+					if(p.isObligatorio()) {
+						ts.lblNombre.setText(p.getTipo().getNombre()+" *");
+					} else
+						ts.lblNombre.setText(p.getTipo().getNombre());
+					
+					panel_3.add(ts);
+				} else if (p.getTipo().getTipo().equals(TipoDato.DATE)) {
+					TemplateDate td = new TemplateDate();
+					if(p.isObligatorio()) {
+						td.lblNombre.setText(p.getTipo().getNombre()+" *");
+					} else
+						td.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(td);
+				} else if (p.getTipo().getTipo().equals(TipoDato.BLOB)) {
+					TemplateBlob tb = new TemplateBlob();
+					if(p.isObligatorio()) {
+						tb.lblNombre.setText(p.getTipo().getNombre()+" *");
+					} else
+						tb.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(tb);
+				} else {
+					TemplateString ts = new TemplateString();
+					if(p.isObligatorio()) {
+						ts.lblNewLabel.setText(p.getTipo().getNombre()+" *");
+					} else
+						ts.lblNewLabel.setText(p.getTipo().getNombre());
+					panel_3.add(ts);
+				}
+				cont++;
+			} else if (cont > 4 && cont < 10) {
+
+				if (p.getTipo().getTipo().equals(TipoDato.BOOLEAN)) {
+					TemplateBoolean ts = new TemplateBoolean();
+					if(p.isObligatorio()) {
+						ts.lblNombre.setText(p.getTipo().getNombre()+" *");
+					} else
+						ts.lblNombre.setText(p.getTipo().getNombre());
+					
+					panel_3.add(ts);
+				} else if (p.getTipo().getTipo().equals(TipoDato.DATE)) {
+					TemplateDate td = new TemplateDate();
+					if(p.isObligatorio()) {
+						td.lblNombre.setText(p.getTipo().getNombre()+" *");
+					} else
+						td.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(td);
+				} else if (p.getTipo().getTipo().equals(TipoDato.BLOB)) {
+					TemplateBlob tb = new TemplateBlob();
+					if(p.isObligatorio()) {
+						tb.lblNombre.setText(p.getTipo().getNombre()+" *");
+					} else
+						tb.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(tb);
+				} else {
+					TemplateString ts = new TemplateString();
+					if(p.isObligatorio()) {
+						ts.lblNewLabel.setText(p.getTipo().getNombre()+" *");
+					} else
+						ts.lblNewLabel.setText(p.getTipo().getNombre());
+					panel_3.add(ts);
+				}
 				cont++;
 
-			}
-
-			if (cont > 4 && cont < 10) {
-				TemplateString ts = new TemplateString();
-				ts.lblNewLabel.setText(p.getTipo().getNombre());
-				panel_4.add(ts);
+			} else if (cont > 9 && cont < 15) {
+				if (p.getTipo().getTipo().equals(TipoDato.BOOLEAN)) {
+					TemplateBoolean ts = new TemplateBoolean();
+					if(p.isObligatorio()) {
+						ts.lblNombre.setText(p.getTipo().getNombre()+" *");
+					} else
+						ts.lblNombre.setText(p.getTipo().getNombre());
+					
+					panel_3.add(ts);
+				} else if (p.getTipo().getTipo().equals(TipoDato.DATE)) {
+					TemplateDate td = new TemplateDate();
+					if(p.isObligatorio()) {
+						td.lblNombre.setText(p.getTipo().getNombre()+" *");
+					} else
+						td.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(td);
+				} else if (p.getTipo().getTipo().equals(TipoDato.BLOB)) {
+					TemplateBlob tb = new TemplateBlob();
+					if(p.isObligatorio()) {
+						tb.lblNombre.setText(p.getTipo().getNombre()+" *");
+					} else
+						tb.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(tb);
+				} else {
+					TemplateString ts = new TemplateString();
+					if(p.isObligatorio()) {
+						ts.lblNewLabel.setText(p.getTipo().getNombre()+" *");
+					} else
+						ts.lblNewLabel.setText(p.getTipo().getNombre());
+					panel_3.add(ts);
+				}
 				cont++;
-
 			}
-
-			if (cont > 9 && cont < 15) {
-				TemplateString ts = new TemplateString();
-				ts.lblNewLabel.setText(p.getTipo().getNombre());
-				panel_5.add(ts);
-				cont++;
-
-			}
-
 		}
 
 	}

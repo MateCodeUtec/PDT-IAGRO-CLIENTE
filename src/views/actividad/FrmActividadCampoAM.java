@@ -52,6 +52,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
@@ -84,6 +85,8 @@ public class FrmActividadCampoAM extends JFrame {
 	public static String descripcionForm;
 	private JButton btnPreview;
 	private ActividadCampo ac;
+	private JTextField txtBuscar;
+	ArrayList<Formulario> miLista = null;
 
 	private JScrollPane scrollPaneParam;
 	private JTable jtable_param;
@@ -121,7 +124,12 @@ public class FrmActividadCampoAM extends JFrame {
 		panel.setBackground(new Color(119, 184, 105));
 		panel.setLayout(null);
 
-		JLabel lblTitulo = new JLabel("Alta de Actividad de Campo");
+		JLabel lblTitulo = new JLabel("Alta de Actividad de campo");
+		if (accion.equals(AccionFormulario.Modificar)) {
+			lblTitulo = new JLabel("Modificar Actividad de campo");
+		} else if (accion.equals(AccionFormulario.Eliminar)) {
+			lblTitulo = new JLabel("Eliminar Actividad de campo");
+		}
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
 		lblTitulo.setBounds(39, 11, 257, 14);
@@ -160,7 +168,9 @@ public class FrmActividadCampoAM extends JFrame {
 		} catch (NamingException e2) {
 			e2.printStackTrace();
 		}
-
+		
+		miLista = (ArrayList<Formulario>) formularioBean.obtenerTodos();
+		
 		txtTitulo = new JTextField();
 		txtTitulo.setToolTipText("Selecciona el formulario y haz clic en \"Crear\"");
 		txtTitulo.setVerifyInputWhenFocusTarget(false);
@@ -171,6 +181,40 @@ public class FrmActividadCampoAM extends JFrame {
 		txtTitulo.setBackground(new Color(255, 255, 255));
 		txtTitulo.setBounds(31, 103, 330, 33);
 		panel_2.add(txtTitulo);
+		
+		txtBuscar = new JTextField();
+		txtBuscar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				
+				if (txtBuscar.getText().length() > 0) {
+					/*
+					 * Filtro de miLista, a los que cumplan alguna condicion de .filter(), 
+					 * los agrego a la lista filtradoACtividad  con la funcion de la clase Collectors.toList(), 
+					 * y vuelvo a construir la tabla 
+					 */
+					var filtradoForm = miLista.stream()
+							.filter(p -> p.getTitulo().contains(txtBuscar.getText())
+									|| p.getDescripcion().contains(txtBuscar.getText()))
+							.collect(Collectors.toList());
+					miLista = (ArrayList<Formulario>) filtradoForm;
+					construirTabla();
+				} else {
+					miLista = (ArrayList<Formulario>) formularioBean.obtenerTodos();
+					construirTabla();
+				}
+				
+			}
+		});
+		txtBuscar.setToolTipText("Buscar por titulo o descripcion");
+		txtBuscar.setVerifyInputWhenFocusTarget(false);
+		txtBuscar.setForeground(new Color(0, 0, 0));
+		txtBuscar.setFont(new Font("Arial", Font.PLAIN, 12));
+		txtBuscar.setColumns(10);
+		txtBuscar.setBorder(null);
+		txtBuscar.setBackground(new Color(255, 255, 255));
+		txtBuscar.setBounds(469, 87, 411, 33);
+		panel_2.add(txtBuscar);
 
 		JSeparator separator = new JSeparator();
 		separator.setForeground(Color.LIGHT_GRAY);
@@ -191,7 +235,7 @@ public class FrmActividadCampoAM extends JFrame {
 		});
 		btnCancelar.setForeground(Color.BLACK);
 		btnCancelar.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
-		btnCancelar.setBorder(new LineBorder(new Color(240, 248, 255)));
+		btnCancelar.setBorder(null);
 		btnCancelar.setBackground(Color.LIGHT_GRAY);
 		btnCancelar.setBounds(31, 441, 162, 33);
 		panel_2.add(btnCancelar);
@@ -228,7 +272,7 @@ public class FrmActividadCampoAM extends JFrame {
 		scrollPaneParam.setForeground(Color.BLACK);
 		scrollPaneParam.setBackground(SystemColor.control);
 		scrollPaneParam.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
-		scrollPaneParam.setBounds(395, 108, 485, 280);
+		scrollPaneParam.setBounds(395, 142, 485, 246);
 		panel_2.add(scrollPaneParam);
 
 		jtable_param = new JTable();
@@ -275,6 +319,7 @@ public class FrmActividadCampoAM extends JFrame {
 							actividadBean.crear(ac);
 							JOptionPane.showMessageDialog(null, "Actividad de campo guardada con éxito");
 						}
+						setVisible(false);
 
 					} catch (Exception e2) {
 						e2.printStackTrace();
@@ -288,14 +333,14 @@ public class FrmActividadCampoAM extends JFrame {
 		});
 		btnPreview.setForeground(Color.WHITE);
 		btnPreview.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
-		btnPreview.setBorder(new LineBorder(new Color(240, 248, 255)));
+		btnPreview.setBorder(null);
 		btnPreview.setBackground(new Color(119, 184, 105));
 		btnPreview.setBounds(717, 441, 162, 33);
 		panel_2.add(btnPreview);
 
 		JLabel lblNewLabel_1 = new JLabel("Formularios disponibles");
-		lblNewLabel_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(395, 73, 485, 28);
+		lblNewLabel_1.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(395, 49, 485, 28);
 		panel_2.add(lblNewLabel_1);
 
 		JSeparator separator_2_2 = new JSeparator();
@@ -309,6 +354,17 @@ public class FrmActividadCampoAM extends JFrame {
 		lblNewLabel_1_1_2_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblNewLabel_1_1_2_1.setBounds(31, 334, 199, 20);
 		panel_2.add(lblNewLabel_1_1_2_1);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setForeground(Color.LIGHT_GRAY);
+		separator_2.setBackground(new Color(248, 248, 255));
+		separator_2.setBounds(394, 126, 486, 10);
+		panel_2.add(separator_2);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("Buscar : ");
+		lblNewLabel_1_1_1.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblNewLabel_1_1_1.setBounds(395, 87, 73, 33);
+		panel_2.add(lblNewLabel_1_1_1);
 
 		if (AccionFormulario.Modificar.equals(accion)) {
 
@@ -355,8 +411,6 @@ public class FrmActividadCampoAM extends JFrame {
 	 * @return matriz [][]
 	 */
 	private String[][] obtenerMatriz() {
-		ArrayList<Formulario> miLista = null;
-		miLista = (ArrayList<Formulario>) formularioBean.obtenerTodos();
 
 		String matrizInfo[][] = new String[miLista.size()][3];
 

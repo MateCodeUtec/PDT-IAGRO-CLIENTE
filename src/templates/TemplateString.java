@@ -10,6 +10,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Font;
+import javax.swing.BoxLayout;
 
 public class TemplateString extends JPanel {
 	public JTextField textField;
@@ -19,15 +20,15 @@ public class TemplateString extends JPanel {
 	 * Create the panel.
 	 */
 	public TemplateString() {
-		setBorder(new LineBorder(new Color(153, 255, 153), 1, true));
-		setLayout(new GridLayout(0, 1, 0, 0));
+		setBorder(new LineBorder(Color.GRAY, 2));
+		setLayout(new GridLayout(0, 2, 0, 0));
 		
 		lblNewLabel = new JLabel("New label");
-		lblNewLabel.setFont(new Font("Calibri Light", Font.PLAIN, 14));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 10));
 		add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBorder(new LineBorder(new Color(102, 255, 153)));
+		textField.setBorder(null);
 		textField.setForeground(Color.LIGHT_GRAY);
 		add(textField);
 		textField.setColumns(10);

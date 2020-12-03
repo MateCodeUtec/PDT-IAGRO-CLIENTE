@@ -17,6 +17,7 @@ import enums.TipoDato;
 import enums.Visibilidad;
 import helpers.DevuelveTipoDato;
 import helpers.Validaciones;
+import models.ActividadCampo;
 import models.Formulario;
 import models.Parametro;
 import models.Rol;
@@ -90,6 +91,7 @@ public class FrmFormAM extends JFrame {
 	private JTextField txtNombre;
 	private JComboBox cbRol;
 	private JComboBox cbVisibilidad;
+	private ArrayList<Parametro> miLista = null;
 	public static Formulario f;
 
 	/**
@@ -177,7 +179,7 @@ public class FrmFormAM extends JFrame {
 		panel_2.add(separator);
 
 		JLabel lblNewLabel_1_1 = new JLabel("T\u00EDtulo");
-		lblNewLabel_1_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
+		lblNewLabel_1_1.setFont(new Font("Dialog", Font.PLAIN, 14));
 		lblNewLabel_1_1.setBounds(31, 112, 199, 14);
 		panel_2.add(lblNewLabel_1_1);
 
@@ -188,16 +190,16 @@ public class FrmFormAM extends JFrame {
 				
 			}
 		});
-		btnCancelar.setForeground(Color.WHITE);
+		btnCancelar.setForeground(Color.DARK_GRAY);
 		btnCancelar.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
-		btnCancelar.setBorder(new LineBorder(new Color(240, 248, 255)));
+		btnCancelar.setBorder(null);
 		btnCancelar.setBackground(new Color(204, 204, 204));
 		btnCancelar.setBounds(31, 441, 162, 33);
 		panel_2.add(btnCancelar);
 
 		JLabel lblNewLabel_1_1_2 = new JLabel("Descripci\u00F3n");
-		lblNewLabel_1_1_2.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
-		lblNewLabel_1_1_2.setBounds(31, 203, 199, 14);
+		lblNewLabel_1_1_2.setFont(new Font("Dialog", Font.PLAIN, 14));
+		lblNewLabel_1_1_2.setBounds(31, 190, 199, 27);
 		panel_2.add(lblNewLabel_1_1_2);
 
 		JSeparator separator_2_1 = new JSeparator();
@@ -218,7 +220,7 @@ public class FrmFormAM extends JFrame {
 		taDescripcion.setBounds(31, 224, 199, 85);
 		panel_2.add(taDescripcion);
 
-		JButton btnAgregarParam = new JButton("Agregar Par\u00E1metro");
+		JButton btnAgregarParam = new JButton("Agregar");
 		btnAgregarParam.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -239,6 +241,8 @@ public class FrmFormAM extends JFrame {
 				construirTabla();
 				txtNombre.setText("");
 				txtNombre.requestFocus();
+				checkBoxObligatorio.setSelected(false);
+				
 
 			}
 		});
@@ -246,7 +250,7 @@ public class FrmFormAM extends JFrame {
 		btnAgregarParam.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		btnAgregarParam.setBorder(null);
 		btnAgregarParam.setBackground(new Color(119, 184, 105));
-		btnAgregarParam.setBounds(741, 340, 162, 33);
+		btnAgregarParam.setBounds(796, 340, 107, 33);
 		panel_2.add(btnAgregarParam);
 
 		JLabel lblIdForm = new JLabel("New label");
@@ -392,14 +396,14 @@ public class FrmFormAM extends JFrame {
 		checkEquip.setBounds(3, 14, 190, 21);
 		panel_1.add(checkEquip);
 
-		JLabel lblNewLabel = new JLabel("Selecciona los campos a visualizar");
+		JLabel lblNewLabel = new JLabel("Selecciona los campos ");
 		lblNewLabel.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
-		lblNewLabel.setBounds(240, 92, 201, 21);
+		lblNewLabel.setBounds(240, 79, 201, 34);
 		panel_2.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("Agregar Campos");
+		JLabel lblNewLabel_1 = new JLabel("Agregar mas campos");
 		lblNewLabel_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
-		lblNewLabel_1.setBounds(461, 92, 452, 21);
+		lblNewLabel_1.setBounds(461, 79, 442, 34);
 		panel_2.add(lblNewLabel_1);
 
 		JSeparator separator_2_2 = new JSeparator();
@@ -408,6 +412,33 @@ public class FrmFormAM extends JFrame {
 		separator_2_2.setBackground(new Color(248, 248, 255));
 		separator_2_2.setBounds(447, 89, 14, 285);
 		panel_2.add(separator_2_2);
+		
+		JButton btnEliminarParmetro = new JButton("Eliminar");
+		btnEliminarParmetro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int row = jtable_param.getSelectedRow(); 
+
+				if(row >= 0) {
+				    // Convierto el elemento selecciondo de la lista a su objeto correspondiente;
+				    Parametro parametro = miLista.get(jtable_param.convertRowIndexToModel(row));
+				    //Lo remuevo de las listas
+				    FrmFormAM.listaParametros.remove(parametro);
+				    miLista.remove(parametro);
+				    
+		            construirTabla();
+				     
+				}else {
+				    JOptionPane.showMessageDialog(null,"Seleccionar el parametro que desea quitar", "Quitar parametro", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
+		btnEliminarParmetro.setForeground(Color.DARK_GRAY);
+		btnEliminarParmetro.setFont(new Font("Dialog", Font.PLAIN, 14));
+		btnEliminarParmetro.setBorder(null);
+		btnEliminarParmetro.setBackground(new Color(204,204,204));
+		btnEliminarParmetro.setBounds(673, 340, 107, 33);
+		panel_2.add(btnEliminarParmetro);
 
 		comboTipoParam();
 		comboVisibilidad();
@@ -470,7 +501,6 @@ public class FrmFormAM extends JFrame {
 	 * @return matriz [][]
 	 */
 	private String[][] obtenerMatriz() {
-		ArrayList<Parametro> miLista = null;
 		miLista = (ArrayList<Parametro>) FrmFormAM.listaParametros;
 
 		String matrizInfo[][] = new String[miLista.size()][3];

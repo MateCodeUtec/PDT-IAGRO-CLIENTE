@@ -394,6 +394,20 @@ public class FrmPrincipal extends JFrame {
 
 		lblNombreUsuario.setText(usuario.getNombre() + " " + usuario.getApellido());
 
+		if (usuario.getRol().getId() == 2L) {
+			btnUsuarioAlta.setEnabled(false);
+			btnUsuarioEditar.setEnabled(false);
+			btnUsuarioListar.setEnabled(false);
+			btnUsuarioEliminar.setEnabled(false);
+		} else if (usuario.getRol().getId() == 3L) {
+			btnUsuarioAlta.setEnabled(false);
+			btnUsuarioEditar.setEnabled(false);
+			btnUsuarioListar.setEnabled(false);
+			btnUsuarioEliminar.setEnabled(false);
+			btnFormularioAlta.setEnabled(false);
+			btnFormularioEditar.setEnabled(false);
+			btnFormularioListar.setEnabled(false);
+			btnFormularioEliminar.setEnabled(false);
+		}
 	}
-
 }

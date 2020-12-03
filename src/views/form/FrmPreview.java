@@ -52,6 +52,9 @@ import services.LocalidadBeanRemote;
 import services.MetodoBeanRemote;
 import services.RegionBeanRemote;
 import services.UsuarioBeanRemote;
+import templates.TemplateBlob;
+import templates.TemplateBoolean;
+import templates.TemplateDate;
 import templates.TemplateString;
 
 import java.awt.event.ActionListener;
@@ -90,7 +93,7 @@ public class FrmPreview extends JFrame {
 	private JComboBox cbEquip = new JComboBox<Equipamiento>();
 	private Set<Metodo> metodos;
 	private Set<Equipamiento> equipamientos;
-	private JButton btnCrearForm ;
+	private JButton btnCrearForm;
 
 	/**
 	 * Create the frame.
@@ -151,7 +154,7 @@ public class FrmPreview extends JFrame {
 		JLabel lblTitulo = new JLabel("Vista previa del formulario");
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
-		lblTitulo.setBounds(39, 11, 257, 14);
+		lblTitulo.setBounds(35, 0, 257, 35);
 		panel.add(lblTitulo);
 
 		JLabel lblNewLabel_2 = new JLabel("");
@@ -286,7 +289,7 @@ public class FrmPreview extends JFrame {
 		lblLocalidad.setBounds(770, 10, 151, 23);
 		lblLocalidad.setVisible(false);
 		panel_1.add(lblLocalidad);
-		
+
 		cbEquip = new JComboBox();
 		cbEquip.setFont(new Font("Gill Sans MT", Font.PLAIN, 12));
 		cbEquip.setVisible(false);
@@ -294,14 +297,14 @@ public class FrmPreview extends JFrame {
 		cbEquip.setBounds(239, 42, 151, 23);
 		panel_1.add(cbEquip);
 		comboMetodo();
-		
+
 		JLabel lblTituloForm = new JLabel("");
 		lblTituloForm.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		lblTituloForm.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
 		lblTituloForm.setBounds(10, 42, 198, 23);
 		lblTituloForm.setText(FrmFormAM.tituloForm);
 		panel_1.add(lblTituloForm);
-		
+
 		JTextArea taDescForm = new JTextArea();
 		taDescForm.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		taDescForm.setFont(new Font("Segoe UI Light", Font.PLAIN, 12));
@@ -310,33 +313,34 @@ public class FrmPreview extends JFrame {
 		taDescForm.setBounds(10, 91, 374, 51);
 		taDescForm.setText(FrmFormAM.descripcionForm);
 		panel_1.add(taDescForm);
-		
+
 		JLabel lblNewLabel = new JLabel("Descripci\u00F3n");
 		lblNewLabel.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblNewLabel.setBackground(Color.WHITE);
 		lblNewLabel.setBounds(10, 70, 151, 23);
 		panel_1.add(lblNewLabel);
-		
+
 		JLabel lblTitulo_1 = new JLabel("T\u00EDtulo");
 		lblTitulo_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblTitulo_1.setBackground(Color.WHITE);
 		lblTitulo_1.setBounds(10, 10, 151, 23);
 		panel_1.add(lblTitulo_1);
-		
+
 		JButton btnVolver = new JButton("Volver");
-		btnVolver.setBackground(SystemColor.control);
-		btnVolver.setForeground(Color.BLACK);
-		btnVolver.setFont(new Font("Gill Sans MT", Font.PLAIN, 13));
+		btnVolver.setBorder(null);
+		btnVolver.setBackground(Color.LIGHT_GRAY);
+		btnVolver.setForeground(Color.DARK_GRAY);
+		btnVolver.setFont(new Font("Dialog", Font.PLAIN, 14));
 		btnVolver.setBounds(10, 523, 172, 38);
 		panel_2.add(btnVolver);
-		
+
 		btnCrearForm = new JButton("Crear formulario");
 		btnCrearForm.setForeground(Color.WHITE);
-		if(AccionFormulario.Modificar.equals(accion))
+		if (AccionFormulario.Modificar.equals(accion))
 			btnCrearForm = new JButton("Modificar formulario");
 		else
 			btnCrearForm = new JButton("Crear formulario");
-		//btnCrearForm.setBounds(726, 523, 198, 38);
+		// btnCrearForm.setBounds(726, 523, 198, 38);
 		btnCrearForm.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		btnCrearForm.setBorder(null);
 		btnCrearForm.setVisible(true);
@@ -348,14 +352,14 @@ public class FrmPreview extends JFrame {
 
 					Set<Parametro> hashSetParametros = new HashSet<>(FrmFormAM.listaParametros);
 					FrmFormAM.f.setParametros(hashSetParametros);
-					if(AccionFormulario.Modificar.equals(accion)) {
+					if (AccionFormulario.Modificar.equals(accion)) {
 						formularioBean.actualizar(FrmFormAM.f);
 						JOptionPane.showMessageDialog(null, "Formulario modificado con exito");
 					} else if (AccionFormulario.Alta.equals(accion)) {
 						formularioBean.crear(FrmFormAM.f);
 						JOptionPane.showMessageDialog(null, "Formulario guardado con exito");
 					}
-					
+
 					FrmFormAM.f = null;
 
 					setVisible(false);
@@ -370,18 +374,18 @@ public class FrmPreview extends JFrame {
 
 		btnCrearForm.setBounds(749, 523, 172, 38);
 		panel_2.add(btnCrearForm);
-		
+
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 			}
 		});
-			
+
 		if (FrmFormAM.checkDepto.isSelected()) {
 			cbDepto.setVisible(true);
 			lblDepto.setVisible(true);
 			FrmFormAM.f.setUsaDepto("S");
-		} 
+		}
 		if (FrmFormAM.checkEquip.isSelected()) {
 			cbEquip.setVisible(true);
 			lblEquip.setVisible(true);
@@ -419,27 +423,103 @@ public class FrmPreview extends JFrame {
 		for (Parametro p : FrmFormAM.listaParametros) {
 
 			if (cont < 5) {
-				TemplateString ts = new TemplateString();
-				ts.lblNewLabel.setText(p.getTipo().getNombre());
-				panel_3.add(ts);
+				if (p.getTipo().getTipo().equals(TipoDato.BOOLEAN)) {
+					TemplateBoolean ts = new TemplateBoolean();
+					if (p.isObligatorio()) {
+						ts.lblNombre.setText(p.getTipo().getNombre() + " *");
+					} else
+						ts.lblNombre.setText(p.getTipo().getNombre());
+
+					panel_3.add(ts);
+				} else if (p.getTipo().getTipo().equals(TipoDato.DATE)) {
+					TemplateDate td = new TemplateDate();
+					if (p.isObligatorio()) {
+						td.lblNombre.setText(p.getTipo().getNombre() + " *");
+					} else
+						td.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(td);
+				} else if (p.getTipo().getTipo().equals(TipoDato.BLOB)) {
+					TemplateBlob tb = new TemplateBlob();
+					if (p.isObligatorio()) {
+						tb.lblNombre.setText(p.getTipo().getNombre() + " *");
+					} else
+						tb.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(tb);
+				} else {
+					TemplateString ts = new TemplateString();
+					if (p.isObligatorio()) {
+						ts.lblNewLabel.setText(p.getTipo().getNombre() + " *");
+					} else
+						ts.lblNewLabel.setText(p.getTipo().getNombre());
+					panel_3.add(ts);
+				}
+				cont++;
+			} else if (cont > 4 && cont < 10) {
+
+				if (p.getTipo().getTipo().equals(TipoDato.BOOLEAN)) {
+					TemplateBoolean ts = new TemplateBoolean();
+					if (p.isObligatorio()) {
+						ts.lblNombre.setText(p.getTipo().getNombre() + " *");
+					} else
+						ts.lblNombre.setText(p.getTipo().getNombre());
+
+					panel_3.add(ts);
+				} else if (p.getTipo().getTipo().equals(TipoDato.DATE)) {
+					TemplateDate td = new TemplateDate();
+					if (p.isObligatorio()) {
+						td.lblNombre.setText(p.getTipo().getNombre() + " *");
+					} else
+						td.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(td);
+				} else if (p.getTipo().getTipo().equals(TipoDato.BLOB)) {
+					TemplateBlob tb = new TemplateBlob();
+					if (p.isObligatorio()) {
+						tb.lblNombre.setText(p.getTipo().getNombre() + " *");
+					} else
+						tb.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(tb);
+				} else {
+					TemplateString ts = new TemplateString();
+					if (p.isObligatorio()) {
+						ts.lblNewLabel.setText(p.getTipo().getNombre() + " *");
+					} else
+						ts.lblNewLabel.setText(p.getTipo().getNombre());
+					panel_3.add(ts);
+				}
 				cont++;
 
-			}
+			} else if (cont > 9 && cont < 15) {
+				if (p.getTipo().getTipo().equals(TipoDato.BOOLEAN)) {
+					TemplateBoolean ts = new TemplateBoolean();
+					if (p.isObligatorio()) {
+						ts.lblNombre.setText(p.getTipo().getNombre() + " *");
+					} else
+						ts.lblNombre.setText(p.getTipo().getNombre());
 
-			if (cont > 4 && cont < 10) {
-				TemplateString ts = new TemplateString();
-				ts.lblNewLabel.setText(p.getTipo().getNombre());
-				panel_4.add(ts);
+					panel_3.add(ts);
+				} else if (p.getTipo().getTipo().equals(TipoDato.DATE)) {
+					TemplateDate td = new TemplateDate();
+					if (p.isObligatorio()) {
+						td.lblNombre.setText(p.getTipo().getNombre() + " *");
+					} else
+						td.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(td);
+				} else if (p.getTipo().getTipo().equals(TipoDato.BLOB)) {
+					TemplateBlob tb = new TemplateBlob();
+					if (p.isObligatorio()) {
+						tb.lblNombre.setText(p.getTipo().getNombre() + " *");
+					} else
+						tb.lblNombre.setText(p.getTipo().getNombre());
+					panel_3.add(tb);
+				} else {
+					TemplateString ts = new TemplateString();
+					if (p.isObligatorio()) {
+						ts.lblNewLabel.setText(p.getTipo().getNombre() + " *");
+					} else
+						ts.lblNewLabel.setText(p.getTipo().getNombre());
+					panel_3.add(ts);
+				}
 				cont++;
-
-			}
-
-			if (cont > 9 && cont < 15) {
-				TemplateString ts = new TemplateString();
-				ts.lblNewLabel.setText(p.getTipo().getNombre());
-				panel_5.add(ts);
-				cont++;
-
 			}
 
 		}

@@ -91,7 +91,7 @@ public class FrmListadoActividad extends JFrame {
 		JLabel lblTitulo = new JLabel("Listado de actividades de campo");
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
-		lblTitulo.setBounds(39, 11, 257, 14);
+		lblTitulo.setBounds(39, 0, 257, 39);
 		panel.add(lblTitulo);
 		
 		JLabel lblNewLabel_2 = new JLabel("");
@@ -248,8 +248,12 @@ public class FrmListadoActividad extends JFrame {
 				}
 			}
 		});
-		btnReporte.setBounds(86, 130, 139, 33);
+		btnReporte.setBounds(31, 131, 139, 33);
 		btnReporte.setBackground(new Color(119, 184, 105));
+		btnReporte.setVisible(false);
+		if (accion.equals(AccionFormulario.Listar)) {
+			btnReporte.setVisible(true);
+		}
 		panel_2.add(btnReporte);
 		
 		JDateChooser dcFechaDesde = new JDateChooser();
