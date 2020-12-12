@@ -401,7 +401,7 @@ public class FrmFormAM extends JFrame {
 		lblNewLabel.setBounds(240, 79, 201, 34);
 		panel_2.add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("Agregar mas campos");
+		JLabel lblNewLabel_1 = new JLabel("Par\u00E1metros");
 		lblNewLabel_1.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		lblNewLabel_1.setBounds(461, 79, 442, 34);
 		panel_2.add(lblNewLabel_1);

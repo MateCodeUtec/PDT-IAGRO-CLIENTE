@@ -26,6 +26,8 @@ import java.awt.Toolkit;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import models.Estacion;
 import models.Rol;
 import models.Usuario;
@@ -232,9 +234,12 @@ public class FrmLogin extends JFrame {
 
 		var usuario = txtUsuario.getText();
 		var pass = txtPassword.getText();
-
+		
+		// Encriptamos la contraseña
+		pass = DigestUtils.md5Hex(pass);
 		try {
 			Usuario usuarioLogin = uBean.getUsuario(usuario);
+			
 			var respuesta = uBean.validarLogin(usuarioLogin, usuario, pass);
 			if (respuesta) {
 				setVisible(false);
@@ -247,7 +252,7 @@ public class FrmLogin extends JFrame {
 			}
 
 		} catch (Exception e1) {
-			JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Iniciar sesón", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Credenciales incorrectas", "Iniciar sesión", JOptionPane.ERROR_MESSAGE);
 			e1.printStackTrace();
 		}
 

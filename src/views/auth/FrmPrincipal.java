@@ -370,6 +370,12 @@ public class FrmPrincipal extends JFrame {
 		panel_formularios_1.add(btnFormularioEditar_1);
 
 		JButton btnFormularioEliminar_1 = new JButton("");
+		btnFormularioEliminar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrmListadoActividad frm = new FrmListadoActividad(AccionFormulario.Eliminar, usuario);
+				frm.setVisible(true);
+			}
+		});
 		btnFormularioEliminar_1
 				.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/views/assets/icons/eliminar.png")));
 		btnFormularioEliminar_1.setToolTipText("Eliminar Activdad de Campo");
@@ -380,13 +386,13 @@ public class FrmPrincipal extends JFrame {
 		btnFormularioEliminar_1.setBounds(161, 177, 37, 30);
 		panel_formularios_1.add(btnFormularioEliminar_1);
 
-		JLabel lblNewLabel_5 = new JLabel(" Bienvenido:");
+		JLabel lblNewLabel_5 = new JLabel(" Bienvenido  ");
 		lblNewLabel_5.setFont(new Font("Gill Sans MT", Font.PLAIN, 15));
-		lblNewLabel_5.setBounds(0, 40, 94, 14);
+		lblNewLabel_5.setBounds(0, 40, 94, 39);
 		panel_2.add(lblNewLabel_5);
 
 		JLabel lblNombreUsuario = new JLabel("Nombre de usuario");
-		lblNombreUsuario.setBounds(82, 40, 239, 14);
+		lblNombreUsuario.setBounds(82, 40, 239, 39);
 		panel_2.add(lblNombreUsuario);
 		lblNombreUsuario.setForeground(Color.BLACK);
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.LEFT);
@@ -405,8 +411,8 @@ public class FrmPrincipal extends JFrame {
 			btnUsuarioListar.setEnabled(false);
 			btnUsuarioEliminar.setEnabled(false);
 			btnFormularioAlta.setEnabled(false);
-			btnFormularioEditar.setEnabled(false);
-			btnFormularioListar.setEnabled(false);
+			btnFormularioEditar.setEnabled(true);
+			btnFormularioListar.setEnabled(true);
 			btnFormularioEliminar.setEnabled(false);
 		}
 	}

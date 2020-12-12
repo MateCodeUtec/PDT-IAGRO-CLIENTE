@@ -184,6 +184,7 @@ public class FrmPreview extends JFrame {
 		panel_1.setLayout(null);
 
 		cbDepto = new JComboBox();
+		cbDepto.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cbDepto.setBackground(Color.WHITE);
 		cbDepto.setVisible(false);
 		cbDepto.setBounds(597, 119, 151, 23);
@@ -191,6 +192,7 @@ public class FrmPreview extends JFrame {
 		comboDepartamento();
 
 		cbEstacion = new JComboBox();
+		cbEstacion.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cbEstacion.setBackground(Color.WHITE);
 		cbEstacion.setVisible(false);
 		cbEstacion.setBounds(591, 42, 151, 23);
@@ -198,6 +200,7 @@ public class FrmPreview extends JFrame {
 		comboEstacion();
 
 		cbRegion = new JComboBox();
+		cbRegion.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cbRegion.setBackground(Color.WHITE);
 		cbRegion.setVisible(false);
 		cbRegion.setBounds(418, 119, 151, 23);
@@ -278,6 +281,7 @@ public class FrmPreview extends JFrame {
 		panel_1.add(lblFecha);
 
 		cbLocalidad = new JComboBox();
+		cbLocalidad.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cbLocalidad.setBackground(Color.WHITE);
 		cbLocalidad.setVisible(false);
 		cbLocalidad.setBounds(770, 42, 151, 23);

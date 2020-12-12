@@ -167,7 +167,6 @@ public class FrmListado extends JFrame {
 		panel_2.add(lblNewLabel_1_1);
 
 		JButton btnEliminar = new JButton("");
-		btnEliminar.setHorizontalAlignment(SwingConstants.LEFT);
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -219,7 +218,7 @@ public class FrmListado extends JFrame {
 		btnEliminar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnEliminar.setBorder(null);
 		btnEliminar.setBackground(Color.WHITE);
-		btnEliminar.setBounds(41, 111, 45, 33);
+		btnEliminar.setBounds(31, 111, 46, 33);
 		panel_2.add(btnEliminar);
 
 		JButton btnEditar = new JButton("");
@@ -240,6 +239,7 @@ public class FrmListado extends JFrame {
 					FrmUsuarioAM frm = new FrmUsuarioAM(AccionFormulario.Modificar, u);
 					frm.setVisible(true);
 					setVisible(false);
+					
 
 				} else {
 					JOptionPane.showMessageDialog(null, "Usted debe seleccionar el usuario que desea modificar",
@@ -252,7 +252,7 @@ public class FrmListado extends JFrame {
 		btnEditar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		btnEditar.setBorder(null);
 		btnEditar.setBackground(Color.WHITE);
-		btnEditar.setBounds(31, 111, 45, 33);
+		btnEditar.setBounds(41, 111, 35, 33);
 		panel_2.add(btnEditar);
 
 		scrollPaneUsuarios = new JScrollPane();
@@ -265,7 +265,7 @@ public class FrmListado extends JFrame {
 		jtable_usuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		jtable_usuarios.setFont(new Font("Gill Sans MT", Font.PLAIN, 14));
 		jtable_usuarios.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Nombre", "Apellido", "Usuario", "Correo", "Rol" }));
+				new String[] { "Nombre", "Apellido", "Usuario", "Correo","CI", "Instituto", "Profesión", "Rol" }));
 		scrollPaneUsuarios.setViewportView(jtable_usuarios);
 		miLista = (ArrayList<Usuario>) uBean.obtenerTodos();
 		construirTabla();
@@ -287,7 +287,7 @@ public class FrmListado extends JFrame {
 	 */
 	public void construirTabla() {
 
-		String titulos[] = { "Nombre", "Apellido", "Usuario", "Correo", "Rol" };
+		String titulos[] = { "Nombre", "Apellido", "Usuario", "Correo", "CI", "Instituto", "Profesión", "Rol" };
 
 		String informacion[][] = obtenerMatriz();
 
@@ -317,15 +317,31 @@ public class FrmListado extends JFrame {
 	 */
 	private String[][] obtenerMatriz() {
 
-		String matrizInfo[][] = new String[miLista.size()][5];
+		String matrizInfo[][] = new String[miLista.size()][8];
 
 		for (int i = 0; i < miLista.size(); i++) {
+			
 
 			matrizInfo[i][0] = miLista.get(i).getNombre() + "";
 			matrizInfo[i][1] = miLista.get(i).getApellido() + "";
 			matrizInfo[i][2] = miLista.get(i).getUsuario() + "";
 			matrizInfo[i][3] = miLista.get(i).getMail() + "";
-			matrizInfo[i][4] = miLista.get(i).getRol().getNombre() + "";
+			if (miLista.get(i).getCi() == null) {
+				matrizInfo[i][4] = "" + "";
+			} else {
+				matrizInfo[i][4] = miLista.get(i).getCi() + ""; 
+			}
+			if (miLista.get(i).getInstituto() == null) {
+				matrizInfo[i][5] = "" + "";
+			} else {
+				matrizInfo[i][5] = miLista.get(i).getInstituto() + ""; 
+			}
+			if (miLista.get(i).getProfesion() == null) {
+				matrizInfo[i][6] = "" + "";
+			} else {
+				matrizInfo[i][6] = miLista.get(i).getProfesion() + ""; 
+			}
+			matrizInfo[i][7] = miLista.get(i).getRol().getNombre() + "";
 
 		}
 		return matrizInfo;

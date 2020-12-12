@@ -195,6 +195,7 @@ public class FrmActividadCampoView extends JFrame {
 		panel_1.setLayout(null);
 
 		cbDepto = new JComboBox();
+		cbDepto.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cbDepto.setBackground(Color.WHITE);
 		cbDepto.setVisible(false);
 		cbDepto.setBounds(597, 119, 151, 23);
@@ -202,6 +203,7 @@ public class FrmActividadCampoView extends JFrame {
 		comboDepartamento();
 
 		cbEstacion = new JComboBox();
+		cbEstacion.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cbEstacion.setBackground(Color.WHITE);
 		cbEstacion.setVisible(false);
 		cbEstacion.setBounds(591, 42, 151, 23);
@@ -209,6 +211,7 @@ public class FrmActividadCampoView extends JFrame {
 		comboEstacion();
 
 		cbRegion = new JComboBox();
+		cbRegion.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cbRegion.setBackground(Color.WHITE);
 		cbRegion.setVisible(false);
 		cbRegion.setBounds(418, 119, 151, 23);
@@ -263,6 +266,7 @@ public class FrmActividadCampoView extends JFrame {
 		comboEquip();
 
 		cbMetodo = new JComboBox();
+		cbMetodo.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cbMetodo.setVisible(false);
 		cbMetodo.setBackground(Color.WHITE);
 		cbMetodo.setBounds(418, 42, 151, 23);
@@ -288,6 +292,7 @@ public class FrmActividadCampoView extends JFrame {
 		panel_1.add(lblFecha);
 
 		cbLocalidad = new JComboBox();
+		cbLocalidad.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cbLocalidad.setBackground(Color.WHITE);
 		cbLocalidad.setVisible(false);
 		cbLocalidad.setBounds(770, 42, 151, 23);
@@ -301,6 +306,7 @@ public class FrmActividadCampoView extends JFrame {
 		panel_1.add(lblLocalidad);
 		
 		cbEquip = new JComboBox();
+		cbEquip.setFont(new Font("Dialog", Font.PLAIN, 12));
 		cbEquip.setVisible(false);
 		cbEquip.setBackground(Color.WHITE);
 		cbEquip.setBounds(239, 42, 151, 23);
@@ -335,16 +341,19 @@ public class FrmActividadCampoView extends JFrame {
 		panel_1.add(lblTitulo_1);
 
 		JButton btnCrearForm = new JButton("Guardar");
+		btnCrearForm.setBorder(null);
 		btnCrearForm.setForeground(SystemColor.text);
 		btnCrearForm.setBackground( new Color(119, 184, 105));
 		btnCrearForm.setFont(new Font("Gill Sans MT", Font.PLAIN, 12));
-		btnCrearForm.setBounds(10, 522, 164, 33);
+		btnCrearForm.setBounds(767, 522, 164, 33);
 		panel_2.add(btnCrearForm);
 
 		JButton btnVolver = new JButton("Volver");
+		btnVolver.setBackground(Color.LIGHT_GRAY);
+		btnVolver.setBorder(null);
 		btnVolver.setForeground(SystemColor.text);
 		btnVolver.setFont(new Font("Gill Sans MT", Font.PLAIN, 12));
-		btnVolver.setBounds(745, 522, 164, 33);
+		btnVolver.setBounds(10, 522, 164, 33);
 		panel_2.add(btnVolver);
 		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
